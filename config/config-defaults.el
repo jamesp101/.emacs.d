@@ -14,7 +14,7 @@
 
 (add-hook 'after-init-hook #'recentf-mode)
 (customize-set-variable 'reocentf-save-file
-			(expand-file-name ".recentf" (user-emacs-directory))
+			(expand-file-name ".recentf" user-emacs-directory))
 
 
 (customize-set-variable 'kill-do-not-save-duplicates t)
@@ -33,5 +33,6 @@
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
+(setq-default frame-title-format "GNU Emacs")
 
 (provide 'config-defaults)

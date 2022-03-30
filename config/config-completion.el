@@ -3,6 +3,10 @@
 (straight-use-package 'orderless)
 (straight-use-package 'marginalia)
 (straight-use-package 'embark)
+(straight-use-package 'embark-consult)
+
+
+
 
 (defun minibuffer-backward-kill (arg)
   "When minibuffer is completing a file name delete up to parent
@@ -38,6 +42,10 @@ folder, otherwise delete a word"
 (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
 (marginalia-mode 1)
 
+(with-eval-after-load 'all-the-icons
+  (straight-use-package 'all-the-icons-completion)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+
 ;; Set some consult bindings
 (global-set-key (kbd "C-s") 'consult-line)
 (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
@@ -52,10 +60,6 @@ folder, otherwise delete a word"
 (customize-set-variable 'completion-category-overrides '((file (styles . (partial-completion)))))
 (setq completion-category-defaults nil)
 
-;;;; Embark
-
-(global-set-key [remap describe-bindings] #'embark-bindings)
-(global-set-key (kbd "C-.") 'embark-act)
 
 ;; Use Embark to show bindings in a key prefix with `C-h`
 (setq prefix-help-command #'embark-prefix-help-command)

@@ -42,3 +42,8 @@
 (require 'config-completion)
 
 (require 'config-programming)
+(require 'config-workspace)
+(require 'config-vterm)
+
+
+(require 'config-snippets)

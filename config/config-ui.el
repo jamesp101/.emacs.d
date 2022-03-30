@@ -1,44 +1,36 @@
 ;;; config-meow.el -*- lexical-binding: t; -*-
 (straight-use-package 'doom-themes)
-(straight-use-package 'simple-modeline)
+;; (straight-use-package 'simple-modeline)
+(straight-use-package 'doom-modeline)
 (straight-use-package 'hide-mode-line)
 (straight-use-package 'helpful)
 (straight-use-package 'solaire-mode) 
 (straight-use-package 'rainbow-mode)
 (straight-use-package 'rainbow-delimiters)
 (straight-use-package 'all-the-icons)
+(straight-use-package 'diminish)
+(straight-use-package 'parrot)
 
 ;;; Theme
 (require 'doom-themes)
-(load-theme 'doom-monokai-pro)
+(load-theme 'doom-monokai-pro t)
 
 ;;; Modeline 
-(require 'simple-modeline)
-(add-hook 'after-init-hook 'simple-modeline-mode)
+;;(require 'simple-modeline)
+;;(add-hook 'after-init-hook #'simple-modeline-mode)
+(require 'doom-modeline)
+(add-hook 'after-init-hook #'doom-modeline-mode)
 
-;:; Solaire Mode
-(require 'solaire-mode)
-(add-to-list 'solaire-mode-themes-to-face-swap 'doom-one-light)
-(add-hook 'after-init-hook 'solaire-global-mode)
-
-(require 'helpful)
-(define-key helpful-mode-map [remap revert-buffer] #'helpful-update)
-(global-set-key [remap describe-command] #'helpful-command)
-(global-set-key [remap describe-function] #'helpful-callable)
-(global-set-key [remap describe-key] #'helpful-key)
-(global-set-key [remap describe-symbol] #'helpful-symbol)
-(global-set-key [remap describe-variable] #'helpful-variable)
-(global-set-key (kbd "C-h F") #'helpful-function)
-
-;; Bind extra `describe-*' commands
-(global-set-key (kbd "C-h K") #'describe-keymap)
-
-
-(electric-pair-mode 1)w
+(electric-pair-mode 1)  
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
-(add-hook 'prog-mode-hook #'linum-mode)
+(require 'parrot)
+(setq parrot-num-rotations nil)
+(add-hook 'meow-normal-mode-hook #'parrot-stop-animation)
+(add-hook 'meow-insert-mode-hook #'parrot-start-animation)
+(parrot-mode)
 
 
+(require 'diminish)
 (require 'all-the-icons)
 (provide 'config-ui)
