@@ -1,0 +1,7 @@
+*
+!.gitignore
+!.projectile
+!early-init.el
+!init.el
+!config/
+!config/*
