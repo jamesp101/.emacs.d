@@ -29,7 +29,7 @@
 
 ;; Custom file
 (customize-set-variable 'custom-file
-			(expand-file-name "custom.el" default-directory))
+			(expand-file-name "custom.el" user-emacs-directory))
 
 
 (setq gc-cons-threshold ( * 1000 1000))

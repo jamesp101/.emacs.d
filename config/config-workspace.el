@@ -9,5 +9,5 @@
 
 
 
-(provide config-workspace)
+(provide 'config-workspace)
 

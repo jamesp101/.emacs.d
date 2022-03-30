@@ -34,5 +34,23 @@
                                 (lsp-deferred)))
 
 
+;;; Web Mode
+(straight-use-package 'web-mode)
+(straight-use-package 'emmet-mode)
+(straight-use-package 'scss-mode)
+
+(require 'web-mode)
+(require 'emmet-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+(add-hook 'web-mode-hook #'emmet-mode)
+
+(require 'scss-mode)
+(add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
+(add-hook 'scss-mode-hook #'lsp-deferred)
+           
+
+
 (provide 'config-programming)
 ;;;

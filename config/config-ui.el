@@ -1,4 +1,7 @@
 ;;; config-meow.el -*- lexical-binding: t; -*-
+
+
+
 (straight-use-package 'doom-themes)
 ;; (straight-use-package 'simple-modeline)
 (straight-use-package 'doom-modeline)
