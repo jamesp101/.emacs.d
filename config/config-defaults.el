@@ -35,4 +35,7 @@
 
 (setq-default frame-title-format "GNU Emacs")
 
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+
 (provide 'config-defaults)
