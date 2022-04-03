@@ -5,6 +5,7 @@
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
 (straight-use-package 'flycheck)
+(straight-use-package 'flycheck-popup-tip)
 (straight-use-package 'dap-mode)
 (straight-use-package 'editorconfig)
 
@@ -19,7 +20,19 @@
       company-tooltip-align-annotations t
       company-idle-delay 0.0
       company-tooltip-minimum-width 50
-      company-show-numbers t)
+      company-show-numbers t
+      company-backends '(company-capf)
+      company-frontends
+      '(company-pseudo-tooltip-frontend
+        company-echo-metadata-frontend)
+      company-dabbrev-other-buffers nil
+      company-dabbrev-ignore-case nil
+      company-dabbrev-downcase nil)
+;;; Flycheck
+(require 'flycheck)
+(require 'flycheck-popup-tip)
+(setq flycheck-popup-tip-error-prefix "-> ")
+(add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode)
 
 
 (add-hook 'prog-mode-hook  #'company-mode)
@@ -27,42 +40,31 @@
 
 ;;; LSP Mode
 (require 'lsp-mode)
+(require 'lsp-ui)
 (straight-use-package 'lsp-treemacs)
 (add-hook 'lsp-mode-hook #'lsp-treemacs-sync-mode 1)
 
-;;; PYTHON
-(straight-use-package 'python-mode)
-(require 'python-mode)
-(require 'dap-python)
-(straight-use-package 'lsp-pyright)
-
-(add-hook 'python-mode-hook #'(lambda ()
-                                (require 'lsp-pyright)
-                                (lsp-deferred)))
-
-
-;;; Web Mode
-(straight-use-package 'web-mode)
-(straight-use-package 'emmet-mode)
-(straight-use-package 'scss-mode)
-
-;;; HTML
-(require 'web-mode)
-(require 'emmet-mode)
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
-(add-hook 'web-mode-hook #'emmet-mode)
-;;; CSS
-(require 'scss-mode)
-(add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
-(add-hook 'scss-mode-hook #'lsp-deferred)
-           
+(add-hook 'lsp-mode-hook #'(lambda ()
+                             (lsp-ui-sideline-mode nil)))
+(setq lsp-ui-use-webkit t)
 
 
 
+(defcustom lsp-prefix-key "l" nil)
+(define-prefix-command 'lsp-prefix-key)
 
+(define-key 'lsp-prefix-key (kbd "r") 'lsp-rename)
+(define-key 'lsp-prefix-key (kbd "a") 'lsp-execute-code-action)
+(define-key 'lsp-prefix-key (kbd "h") 'lsp-ui-doc-glance)
+(define-key 'lsp-prefix-key (kbd "f") 'lsp-ui-doc-focus-frame)
+(define-key 'lsp-prefix-key (kbd "F") 'lsp-ui-doc-unfocus-frame)
+(define-key 'lsp-prefix-key (kbd "e") 'lsp-treemacs-error-list)
+(define-key 'lsp-prefix-key (kbd "d") 'lsp-ui-peek-find-definitions)
+(define-key 'lsp-prefix-key (kbd "R") 'lsp-ui-peek-find-references)
+(define-key 'lsp-prefix-key (kbd "D") 'lsp-find-declaration)
 
+(meow-leader-define-key
+ '("l" . lsp-prefix-key))
 
 
 (provide 'config-programming)

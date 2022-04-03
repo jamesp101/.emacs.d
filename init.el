@@ -32,7 +32,6 @@
 			(expand-file-name "custom.el" user-emacs-directory))
 
 
-(setq gc-cons-threshold ( * 1000 1000))
 
 (require 'config-defaults)
 (require 'config-ui)
@@ -42,8 +41,15 @@
 (require 'config-completion)
 
 (require 'config-programming)
+(require 'config-lang)
 (require 'config-workspace)
 (require 'config-vterm)
 
 
 (require 'config-snippets)
+(require 'config-helpers)
+(require 'config-window)
+
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+

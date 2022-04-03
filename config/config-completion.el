@@ -24,7 +24,7 @@ folder, otherwise delete a word"
 (require 'vertico)
 (require 'vertico-directory "extensions/vertico-directory.el")
 
-(with-eval-after-load 'evil
+(with-eval-after-load 'meow
   (define-key vertico-map (kbd "C-j") 'vertico-next)
   (define-key vertico-map (kbd "C-k") 'vertico-previous)
   (define-key vertico-map (kbd "M-h") 'vertico-directory-up))
@@ -61,7 +61,16 @@ folder, otherwise delete a word"
 (setq completion-category-defaults nil)
 
 
+
+(require 'embark)
+(require 'embark-consult)
 ;; Use Embark to show bindings in a key prefix with `C-h`
 (setq prefix-help-command #'embark-prefix-help-command)
+(global-set-key (kbd "C-.") 'embark-act)
+(global-set-key (kbd "C-;") 'embark-dwim)
+(global-set-key (kbd "C-h b") 'embark-bindings)
+
+(add-hook 'consult-preview-at-point-mode-hook #'embark-collect-mode)
+
 
 (provide 'config-completion)
