@@ -43,7 +43,9 @@ folder, otherwise delete a word"
 (marginalia-mode 1)
 
 (with-eval-after-load 'all-the-icons
+  (require 'all-the-icons-completion)
   (straight-use-package 'all-the-icons-completion)
+  (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
 ;; Set some consult bindings

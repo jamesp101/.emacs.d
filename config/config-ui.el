@@ -40,8 +40,7 @@
 
 ;; Font
 
-(if (find-font (font-spec :name "Fira Code"))
-    (lambda ()
+(when (find-font (font-spec :name "Fira Code"))
       (set-face-attribute 'default nil
                           :font "Fira Code"
                           :weight 'medium
@@ -53,7 +52,7 @@
       (set-face-attribute 'variable-pitch nil
                           :font "Fira Code"
                           :weight 'bold
-                          :height 110)))
+                          :height 110))
 
 
 
