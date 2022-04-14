@@ -1,8 +1,17 @@
+(straight-use-package 'tree-sitter)
+(straight-use-package 'tree-sitter-langs)
+
+
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
+
 ;;; PYTHON
+
 (straight-use-package 'python-mode)
 (require 'python-mode)
 
 (add-hook 'python-mode-hook #'(lambda ()
+                                (tree-sitter-mode)
                                 (eglot)))
 
 ;;; Web Mode

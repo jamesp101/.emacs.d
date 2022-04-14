@@ -23,4 +23,8 @@
 (meow-leader-define-key
    '("w" . window-prefix-key))
 
+
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?h ?j ?k ?l ))
+(global-set-key (kbd "C-x o") 'ace-window)
+
 (provide 'config-window)

@@ -6,6 +6,7 @@
 (straight-use-package 'corfu)
 (straight-use-package 'corfu-doc)
 (straight-use-package 'cape)
+(straight-use-package 'eldoc-box)
 
 ;; Editor Config
 (require 'editorconfig)
@@ -24,6 +25,9 @@
 (setq corfu-on-exact-match nil)     ;; Configure handling of exact matches
 (setq corfu-echo-documentation nil) ;; Disable documentation in the echo area
 (setq corfu-scroll-margin 5)        ;; Use scroll margin
+
+(require 'eldoc-box)
+
 
 
 (require 'corfu-doc)
@@ -46,6 +50,8 @@
 (straight-use-package 'eglot)
 (require 'eglot)
 
+(add-hook 'eglot--managed-mode #'eldoc-box-hover-mode t)
+
 (defcustom eglot-prefix-key "l" nil)
 (define-prefix-command 'eglot-prefix-key)
 
@@ -54,6 +60,8 @@
 (define-key 'eglot-prefix-key (kbd "d") 'xref-find-definitions)
 (define-key 'eglot-prefix-key (kbd "D") 'xref-find-references)
 (define-key 'eglot-prefix-key (kbd "h") 'eldoc)
+(define-key 'eglot-prefix-key (kbd "m") 'consult-imenu)
+(define-key 'eglot-prefix-key (kbd "M") 'consult-imenu-multi)
 (define-key 'eglot-prefix-key (kbd "e") 'consult-flymake)
 
 (meow-leader-define-key
@@ -63,6 +71,9 @@
 
 (straight-use-package 'markdown-mode)
 (require 'markdown-mode)
+
+
+
 
 (provide 'config-programming)
 ;;;

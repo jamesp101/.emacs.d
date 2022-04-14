@@ -7,8 +7,6 @@
 ;; (bufler-workspace-mode)
 
 
-
-
 (straight-use-package
  '(tabspaces :type git :host github :repo "mclear-tools/tabspaces"))
 
@@ -26,6 +24,22 @@
 
 (add-hook 'after-init-hook #'tabspaces-mode)
 
+(with-eval-after-load 'consult
+  ;; hide full buffer list (still available with "b")
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  ;; set consult-workspace buffer list
+  (defvar consult--source-workspace
+    (list :name     "Workspace Buffers"
+          :narrow   ?w
+          :category 'buffer
+          :state    #'consult--buffer-state
+          :default  t
+          :items    (lambda ()
+                      (tabspaces--tab-bar-buffer-name-filter ((lambda () (consult--buffer-query :sort 'visibility
+                                                                                                  :as #'buffer-name))))))
+
+    "Set workspace buffer list for consult-buffer.")
+  (push consult--source-workspace consult-buffer-sources))
 
 (meow-leader-define-key
  '("TAB" . workspace-prefix-key))
