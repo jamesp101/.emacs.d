@@ -1,71 +1,68 @@
 ;;; config-programming.el -*- lexical-binding: t; -*-
 
 
-(straight-use-package 'company)
-(straight-use-package 'lsp-mode)
-(straight-use-package 'lsp-ui)
-(straight-use-package 'flycheck)
-(straight-use-package 'flycheck-popup-tip)
-(straight-use-package 'dap-mode)
 (straight-use-package 'editorconfig)
+(straight-use-package 'kind-icon)
+(straight-use-package 'corfu)
+(straight-use-package 'corfu-doc)
+(straight-use-package 'cape)
 
 ;; Editor Config
 (require 'editorconfig)
 (editorconfig-mode 1)
 
-;;; Company Mode
-(require 'company)
 
-(setq company-minimum-prefix-length 1
-      company-tooltip-align-annotations t
-      company-idle-delay 0.0
-      company-tooltip-minimum-width 50
-      company-show-numbers t
-      company-backends '(company-capf)
-      company-frontends
-      '(company-pseudo-tooltip-frontend
-        company-echo-metadata-frontend)
-      company-dabbrev-other-buffers nil
-      company-dabbrev-ignore-case nil
-      company-dabbrev-downcase nil)
-;;; Flycheck
-(require 'flycheck)
-(require 'flycheck-popup-tip)
-(setq flycheck-popup-tip-error-prefix "-> ")
-(add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode)
+(require 'corfu)
+
+(setq corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+(setq corfu-auto t)                 ;; Enable auto completiosetq n
+(setq corfu-separator ?\s)          ;; Orderless field separator
+(setq corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+(setq corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+(setq corfu-preview-current nil)    ;; Disable current candidate preview
+(setq corfu-preselect-first nil)    ;; Disable candidate preselection
+(setq corfu-on-exact-match nil)     ;; Configure handling of exact matches
+(setq corfu-echo-documentation nil) ;; Disable documentation in the echo area
+(setq corfu-scroll-margin 5)        ;; Use scroll margin
 
 
-(add-hook 'prog-mode-hook  #'company-mode)
-(diminish 'company-mode)
+(require 'corfu-doc)
+(add-hook 'corfu-mode-hook #'corfu-doc-mode)
+(define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
+(define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)  ;; corfu-previous
+(corfu-global-mode t)
 
-;;; LSP Mode
-(require 'lsp-mode)
-(require 'lsp-ui)
-(straight-use-package 'lsp-treemacs)
-(add-hook 'lsp-mode-hook #'lsp-treemacs-sync-mode 1)
 
-(add-hook 'lsp-mode-hook #'(lambda ()
-                             (lsp-ui-sideline-mode nil)))
-(setq lsp-ui-use-webkit t)
+(require 'kind-icon)
+(setq kind-icon-default-face 'corfu-default)
+(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+
+(require 'cape)
+(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 
 
 
-(defcustom lsp-prefix-key "l" nil)
-(define-prefix-command 'lsp-prefix-key)
+(straight-use-package 'eglot)
+(require 'eglot)
 
-(define-key 'lsp-prefix-key (kbd "r") 'lsp-rename)
-(define-key 'lsp-prefix-key (kbd "a") 'lsp-execute-code-action)
-(define-key 'lsp-prefix-key (kbd "h") 'lsp-ui-doc-glance)
-(define-key 'lsp-prefix-key (kbd "f") 'lsp-ui-doc-focus-frame)
-(define-key 'lsp-prefix-key (kbd "F") 'lsp-ui-doc-unfocus-frame)
-(define-key 'lsp-prefix-key (kbd "e") 'lsp-treemacs-error-list)
-(define-key 'lsp-prefix-key (kbd "d") 'lsp-ui-peek-find-definitions)
-(define-key 'lsp-prefix-key (kbd "R") 'lsp-ui-peek-find-references)
-(define-key 'lsp-prefix-key (kbd "D") 'lsp-find-declaration)
+(defcustom eglot-prefix-key "l" nil)
+(define-prefix-command 'eglot-prefix-key)
+
+(define-key 'eglot-prefix-key (kbd "r") 'eglot-rename)
+(define-key 'eglot-prefix-key (kbd "a") 'eglot-code-actions)
+(define-key 'eglot-prefix-key (kbd "d") 'xref-find-definitions)
+(define-key 'eglot-prefix-key (kbd "D") 'xref-find-references)
+(define-key 'eglot-prefix-key (kbd "h") 'eldoc)
+(define-key 'eglot-prefix-key (kbd "e") 'consult-flymake)
 
 (meow-leader-define-key
- '("l" . lsp-prefix-key))
+ '("l" . eglot-prefix-key))
 
+
+
+(straight-use-package 'markdown-mode)
+(require 'markdown-mode)
 
 (provide 'config-programming)
 ;;;

@@ -37,13 +37,13 @@
 (require 'config-ui)
 
 (require 'config-meow)
-(require 'config-project)
 (require 'config-completion)
+(require 'config-project)
 
-(require 'config-programming)
-(require 'config-lang)
 (require 'config-workspace)
 (require 'config-vterm)
+(require 'config-programming)
+(require 'config-lang)
 
 
 (require 'config-snippets)

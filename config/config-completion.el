@@ -43,8 +43,8 @@ folder, otherwise delete a word"
 (marginalia-mode 1)
 
 (with-eval-after-load 'all-the-icons
-  (require 'all-the-icons-completion)
   (straight-use-package 'all-the-icons-completion)
+  (require 'all-the-icons-completion)
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
@@ -58,8 +58,8 @@ folder, otherwise delete a word"
 
 ;; Set up Orderless for better fuzzy matching
 (require 'orderless)
-(customize-set-variable 'completion-styles '(orderless))
-(customize-set-variable 'completion-category-overrides '((file (styles . (partial-completion)))))
+(setq completion-styles '(orderless))
+(setq completion-category-overrides '((file (styles . (partial-completion)))))
 (setq completion-category-defaults nil)
 
 
@@ -72,7 +72,6 @@ folder, otherwise delete a word"
 (global-set-key (kbd "C-;") 'embark-dwim)
 (global-set-key (kbd "C-h b") 'embark-bindings)
 
-(add-hook 'consult-preview-at-point-mode-hook #'embark-collect-mode)
-
+(add-hook 'embark-collect-mode #'consult-preview-at-point-mode)
 
 (provide 'config-completion)

@@ -13,6 +13,8 @@
 (straight-use-package 'all-the-icons)
 (straight-use-package 'diminish)
 (straight-use-package 'parrot)
+(straight-use-package 'highlight-indent-guides)
+(straight-use-package 'hl-todo)
 
 ;;; Theme
 (require 'doom-themes)
@@ -55,7 +57,12 @@
                           :height 110))
 
 
+(setq highlight-indent-guides-method 'character
+      highlight-indent-guides-suppress-auto-error t)
 
+
+(global-hl-line-mode 1)
+(global-hl-todo-mode 1)
 
 
 (require 'diminish)
