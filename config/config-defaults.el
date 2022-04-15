@@ -1,6 +1,5 @@
 ;;; config-defaults.el  -*- lexical-binding: t; -*-
 
-
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 
 (global-auto-revert-mode 1)
