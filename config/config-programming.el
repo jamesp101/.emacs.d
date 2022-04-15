@@ -7,7 +7,7 @@
 (straight-use-package 'corfu-doc)
 (straight-use-package 'cape)
 (straight-use-package 'eldoc-box)
-
+(straight-use-package 'dap-mode)
 ;; Editor Config
 (require 'editorconfig)
 (editorconfig-mode 1)
@@ -69,11 +69,30 @@
 
 
 
+
+(require 'dap-mode)
+
+
+(defcustom dap-mode-prefix-key "d" nil)
+(define-prefix-command 'dap-mode-prefix-key)
+
+(define-key 'dap-mode-prefix-key (kbd "d") 'dap-debug)
+(define-key 'dap-mode-prefix-key (kbd "t") 'dap-breakpoint-toggle)
+(define-key 'dap-mode-prefix-key (kbd "a") 'dap-breakpoint-add)
+(define-key 'dap-mode-prefix-key (kbd "A") 'dap-breakpoint-delete)
+(define-key 'dap-mode-prefix-key (kbd "g") 'dap-ui-breakpoints)
+(define-key 'dap-mode-prefix-key (kbd "n") 'dap-next)
+(define-key 'dap-mode-prefix-key (kbd "N") 'dap-next)
+(define-key 'dap-mode-prefix-key (kbd "R") 'dap-debug-restart)
+(define-key 'dap-mode-prefix-key (kbd "h") 'dap-hydra)
+
+(meow-leader-define-key
+ '("d" . dap-mode-prefix-key))
+
+
+
+
 (straight-use-package 'markdown-mode)
 (require 'markdown-mode)
-
-
-
-
 (provide 'config-programming)
 ;;;
