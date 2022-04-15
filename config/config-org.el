@@ -8,6 +8,7 @@
 (straight-use-package 'ox-clip)
 (straight-use-package 'org-appear)
 (straight-use-package 'org-roam)
+(straight-use-package 'powerthesaurus)
 
 (require 'org)
 (require 'org-superstar)
@@ -18,6 +19,7 @@
 (require 'ox-clip)
 (require 'org-appear)
 (require 'org-roam)
+(require 'powerthesaurus)
 
 
 ;; Org Mode
@@ -38,7 +40,7 @@
 ;; Org Roam
 (setq org-roam-directory (file-truename "~/org-roam"))
 
-(defvar org-commands-prefix-keyj "p" "Org-Prefix-key")
+(defvar org-commands-prefix-key "p" "Org-Prefix-key")
 
 (define-prefix-command 'org-commands-prefix-key)
 
@@ -47,6 +49,8 @@
 (define-key 'org-commands-prefix-key (kbd "i") 'org-roam-node-insert)
 (define-key 'org-commands-prefix-key (kbd "f") 'org-roam-node-find)
 (define-key 'org-commands-prefix-key (kbd "b") 'org-roam-buffer-toggle)
+(define-key 'org-commands-prefix-key (kbd "b") 'org-roam-buffer-toggle)
+(define-key 'org-commands-prefix-key (kbd "l") 'powerthesaurus-lookup-dwim)
 
 (meow-leader-define-key
  '("o" . org-commands-prefix-key))

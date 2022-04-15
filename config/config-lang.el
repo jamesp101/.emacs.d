@@ -9,8 +9,8 @@
 
 (straight-use-package 'python-mode)
 (require 'python-mode)
-(require 'dap-python)
 (setq dap-python-debugger 'debugpy)
+(require 'dap-python)
 (add-hook 'python-mode-hook #'(lambda ()
                                 (dap-mode)
                                 (tree-sitter-mode)
