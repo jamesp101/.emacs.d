@@ -19,9 +19,9 @@
 (setq corfu-auto t)                 ;; Enable auto completiosetq n
 (setq corfu-separator ?\s)          ;; Orderless field separator
 (setq corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-(setq corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-(setq corfu-preview-current nil)    ;; Disable current candidate preview
-(setq corfu-preselect-first nil)    ;; Disable candidate preselection
+(setq corfu-quit-no-match t)      ;; Never quit, even if there is no match
+(setq corfu-preview-current t) 
+(setq corfu-preselect-first t)    ;; Disable candidate preselection
 (setq corfu-on-exact-match nil)     ;; Configure handling of exact matches
 (setq corfu-echo-documentation nil) ;; Disable documentation in the echo area
 (setq corfu-scroll-margin 5)        ;; Use scroll margin
