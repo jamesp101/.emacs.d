@@ -9,7 +9,7 @@
 
 (add-hook 'prog-mode-hook #'
           (lambda ()
-            (highlight-indent-guides)
+            (highlight-indent-guides-mode)
             (origami-mode)
             ))
 
