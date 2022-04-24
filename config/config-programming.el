@@ -1,33 +1,41 @@
 ;;; config-programming.el -*- lexical-binding: t; -*-
 
 
-(straight-use-package 'company)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
 (straight-use-package 'flycheck)
 (straight-use-package 'flycheck-popup-tip)
 (straight-use-package 'dap-mode)
 (straight-use-package 'editorconfig)
-
+;; Corfu
+(straight-use-package 'corfu)
+(straight-use-package 'corfu-doc)
+(straight-use-package 'kind-icon)
 ;; Editor Config
 (require 'editorconfig)
 (editorconfig-mode 1)
 
-;;; Company Mode
-(require 'company)
 
-(setq company-minimum-prefix-length 1
-      company-tooltip-align-annotations t
-      company-idle-delay 0.0
-      company-tooltip-minimum-width 50
-      company-show-numbers t
-      company-backends '(company-capf)
-      company-frontends
-      '(company-pseudo-tooltip-frontend
-        company-echo-metadata-frontend)
-      company-dabbrev-other-buffers nil
-      company-dabbrev-ignore-case nil
-      company-dabbrev-downcase nil)
+;; Corfu
+(require 'corfu)
+(require 'corfu-doc)
+(require 'kind-icon)
+(setq corfu-cycle t
+      corfu-auto t
+      corfu-separator ?\s
+      corfu-echo-documentation t)
+
+(define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)
+(define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-up)
+
+(add-hook 'corfu-mode-hook
+          #'(lambda () (corfu-doc-mode t)))
+(setq kind-icon-default-face 'corfu-default
+      kind-icon-use-icons t)
+(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+
+
+
 ;;; Flycheck
 (require 'flycheck)
 (require 'flycheck-popup-tip)
@@ -35,8 +43,6 @@
 (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode)
 
 
-(add-hook 'prog-mode-hook  #'company-mode)
-(diminish 'company-mode)
 
 ;;; LSP Mode
 (require 'lsp-mode)
