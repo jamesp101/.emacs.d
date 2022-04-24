@@ -40,23 +40,22 @@
 
 ;; Font
 
-(if (find-font (font-spec :name "Fira Code"))
-    (lambda ()
+(when (find-font (font-spec :name "Roboto Mono"))
       (set-face-attribute 'default nil
-                          :font "Fira Code"
+                          :font "Roboto Mono"
                           :weight 'medium
                           :height 110)
       (set-face-attribute 'fixed-pitch nil
-                          :font "Fira Code"
+                          :font "Roboto Mono"
                           :weight 'medium
                           :height 110)
       (set-face-attribute 'variable-pitch nil
-                          :font "Fira Code"
+                          :font "Roboto Mono"
                           :weight 'bold
-                          :height 110)))
+                          :height 110))
 
 
-
+(setq-default line-spacing 0.4)
 
 
 (require 'diminish)
