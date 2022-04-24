@@ -28,6 +28,7 @@
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.j2\\'" . web-mode))
 (add-hook 'web-mode-hook
           #'(lambda ()
               (electric-pair-mode nil)
@@ -52,5 +53,10 @@
 (straight-use-package 'lsp-haskell)
 (require 'haskell-mode)
 (require 'lsp-haskell)
+(l)
+
+
+
+
 
 (provide 'config-lang)
