@@ -53,8 +53,10 @@
 (straight-use-package 'lsp-haskell)
 (require 'haskell-mode)
 (require 'lsp-haskell)
-(l)
-
+(add-hook 'haskell-mode-hook
+          #' (lambda ()
+               (tree-sitter-mode)
+               (lsp-deferred)))
 
 
 
