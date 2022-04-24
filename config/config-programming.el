@@ -68,6 +68,8 @@
 (define-key 'lsp-prefix-key (kbd "d") 'lsp-ui-peek-find-definitions)
 (define-key 'lsp-prefix-key (kbd "R") 'lsp-ui-peek-find-references)
 (define-key 'lsp-prefix-key (kbd "D") 'lsp-find-declaration)
+(define-key 'lsp-prefix-key (kbd "m") 'consult-imenu)
+(define-key 'lsp-prefix-key (kbd "M") 'lsp-ui-imenu)
 
 (meow-leader-define-key
  '("l" . lsp-prefix-key))

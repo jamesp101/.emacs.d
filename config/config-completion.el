@@ -42,12 +42,12 @@ folder, otherwise delete a word"
 (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
 (marginalia-mode 1)
 
-(with-eval-after-load 'all-the-icons
-  (straight-use-package 'all-the-icons-completion)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+(straight-use-package 'all-the-icons-completion)
+(add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup)
 
 ;; Set some consult bindings
 (global-set-key (kbd "C-s") 'consult-line)
+(global-set-key (kbd "C-x b") 'consult-buffer)
 (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
 
 (setq completion-in-region-function #'consult-completion-in-region)
