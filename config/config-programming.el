@@ -24,10 +24,10 @@
       corfu-auto t
       corfu-separator ?\s
       corfu-echo-documentation t)
-
 (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)
 (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-up)
 
+(add-hook 'after-init-hook #'corfu-global-mode)
 (add-hook 'corfu-mode-hook
           #'(lambda () (corfu-doc-mode t)))
 (setq kind-icon-default-face 'corfu-default
@@ -53,8 +53,11 @@
 (add-hook 'lsp-mode-hook #'(lambda ()
                              (lsp-ui-sideline-mode nil)))
 (setq lsp-ui-use-webkit t)
-
-
+(setq lsp-completion-provider :none)
+(add-hook 'lsp-mode-hook
+          #'(lambda ()
+              (setq-local completion-styles '(orderless)
+                          completion-category-defaults nil)))
 
 (defcustom lsp-prefix-key "l" nil)
 (define-prefix-command 'lsp-prefix-key)

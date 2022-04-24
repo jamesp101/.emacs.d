@@ -7,11 +7,10 @@
 (require 'highlight-indent-guides)
 (require 'origami)
 
-(add-hook 'prog-mode-hook #'
-          (lambda ()
+(add-hook 'prog-mode-hook
+          #'(lambda ()
             (highlight-indent-guides-mode)
-            (origami-mode)
-            ))
+            (origami-mode)))
 
 
 
