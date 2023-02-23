@@ -6,12 +6,12 @@
 
 (evil-leader/set-key
   "SPC" 'consult-projectile
-  "r" 'consult-recent-file
-  )
+  "r" 'consult-recent-file)
 
 ;; ;; LSP Keybinding
 (evil-define-key 'normal 'global (kbd "<SPC>lr") '("Rename" . lsp-rename))
 (evil-define-key 'normal 'global (kbd "<SPC>la") '("Action" . lsp-execute-code-action ))
+
 (evil-define-key 'normal 'global (kbd "<SPC>le") '("Errors" . lsp-treemacs-errors-list))
 (evil-define-key 'normal 'global (kbd "<SPC>ld") '("Definition" . lsp-find-definition))
 (evil-define-key 'normal 'global (kbd "<SPC>lR") '("References" . lsp-find-references))
@@ -21,6 +21,7 @@
 (evil-define-key 'normal 'global (kbd "<SPC>lf") '("Format Buffer" . lsp-format-buffer))
 (evil-define-key 'normal 'global (kbd "<SPC>?") '("Doc" . lsp-ui-doc-show))
 
+(evil-define-key 'normal 'global (kbd "<SPC>ly") '("YasSnippet" . consult-yasnippet))
 ;;
 
 (evil-define-key 'normal 'global (kbd "<SPC>pp") '("Switch Project" . consult-projectile-switch-project))
@@ -36,7 +37,6 @@
 (evil-define-key 'normal 'global (kbd "<SPC>mt") '("Dedicated Terminal Toggle" . aweshell-dedicated-toggle))
 (evil-define-key 'normal 'global (kbd "<SPC>mn") '("Terminal ->" . aweshell-next))
 (evil-define-key 'normal 'global (kbd "<SPC>mp") '("Terminal <-" . aweshell-prev))
-
 
 (evil-define-key 'normal 'global (kbd "<SPC>r") '("Recent File" . consult-recent-file))
 

@@ -42,6 +42,8 @@
 (use-package flycheck
   :config
   :hook (lsp-mode . flycheck-mode))
+
+
 (use-package flycheck-posframe
   :init
   :after flycheck

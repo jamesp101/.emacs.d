@@ -59,18 +59,6 @@
 (require 'config-project)
 (require 'config-keybindings)
 (require 'config-org)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files '("c:/org-mode/agenda/thesis-agenda.org")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:font "ComicMono NF 11"))))
- '(fixed-pitch ((t (:inherit (default)))))
- '(fixed-pitch-serif ((t (:inherit (default)))))
- '(variable-pitch ((t (:font "Roboto Condensed 18")))))
+
+
+(load-file (expand-file-name "config.el" user-emacs-directory))

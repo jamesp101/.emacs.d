@@ -41,7 +41,7 @@
 
 (use-package company
   :init
-  (setq company-minimum-prefix-length 0)
+  (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0)
   (setq company-icon-size 25)
   (setq company-tooltip-minimum-width 64)

@@ -8,16 +8,11 @@
   (setq projectile-known-projects-file 
     (expand-file-name ".cache/projectile-bookmarks.eld" user-emacs-directory))
   (setq projectile-indexing-method 'alien)
+  (setq projectile-sort-order 'recentf-active)
+  (setq projectile-enable-caching t)
 
   :config
   (projectile-mode)
-
-  :init
-  (setq projectile-cache-file
-        (expand-file-name ".cache/projectile.cache" user-emacs-directory))
-  (setq projectile-known-projects-file 
-        (expand-file-name ".cache/projectile-bookmarks.eld" user-emacs-directory))
-  (setq projetile-indexing-method 'alien)
 
   :hook
   (treemacs-mode . (lambda ()
@@ -51,7 +46,16 @@
   :straight nil
   :config
   (company-mode nil))
-(use-package magit)
+
+(use-package vterm)
+
+
+(use-package magit
+  :config
+  (setq transient-history-file
+        (expand-file-name ".cache/lsp-session" user-emacs-directory)))
+
+(use-package gitignore-snippets)
 
 (provide 'config-project)
 

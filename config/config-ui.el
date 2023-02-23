@@ -6,10 +6,22 @@
   :config
   (load-theme 'modus-vivendi-tinted t))
 
+
 (use-package doom-modeline
   :init
   :config
+  (display-battery-mode)
   (doom-modeline-mode))
+
+(use-package nyan-mode
+  :custom
+  (nyan-animate-nyancat t)
+  (nyan-wavy-trail t)
+  :after doom-modeline
+  :hook
+  (doom-modeline . nyan-mode))
+
+
 
 (use-package nano-theme
   :straight
@@ -39,14 +51,8 @@
 
 
 
-(custom-set-faces
- `(default ((t (:font "ComicMono NF 11"))))
- `(fixed-pitch ((t (:inherit (default)))))
- `(fixed-pitch-serif ((t (:inherit (default)))))
- `(variable-pitch ((t (:font "Roboto Condensed 18")))))
 
 
-(setq-default line-spacing 0.4)
 
 
 (provide 'config-ui)

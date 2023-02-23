@@ -35,14 +35,15 @@
 
   (add-to-list 'native-comp-eln-load-path (expand-file-name ".cache/eln-cache/" user-emacs-directory)))
 
+(setq auto-save-list-file-prefix (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
 
 
 
 (setq inhibit-startup-message t)
 (push '(tool-bar-lines . 0) default-frame-alist)
-(push '(menu-bar-lines . 0) default-frame-alist)
 (push '(vertical-scrool-bars) default-frame-alist)
 (push '(mouse-color . "white") default-frame-alist)
 (scroll-bar-mode 0)
+(menu-bar-mode 0)
 
 

@@ -38,7 +38,7 @@
 
   (setq default-coding-system 'utf-8)
 
-  (setq visible-bell 1)
+  (setq visible-bell t)
 
   (setq delete-by-moving-to-trash t)
 
@@ -46,7 +46,8 @@
   (setq auto-save-list-file-prefix (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
 
   :config
-  (global-auto-revert-mode 1))
+  (global-auto-revert-mode 1)
+  (pixel-scroll-precision-mode 1))
 
 
 
@@ -82,6 +83,13 @@
   :straight nil
   :after solaire-mode
   :hook (special-mode . solaire-mode))
+
+
+(use-package eshell
+  :init
+  (setq eshell-directory-name
+        (expand-file-name ".cache/eshell" user-emacs-directory)))
+
 
 
 (provide 'config-defaults)

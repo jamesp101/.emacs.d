@@ -1,0 +1,8 @@
+*
+!.gitignore
+!config/
+!snippets/
+!init.el
+!early-init.el
+!icon.png
+!config.org

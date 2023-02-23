@@ -15,6 +15,8 @@
   (require 'dap-python))
 
 
+(use-package emmet-mode)
+
 ;;; Web Mode
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
