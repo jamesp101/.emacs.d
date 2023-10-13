@@ -78,7 +78,7 @@
 		       (tree-sitter-mode)
 		       (lsp-deferred))))
 
-
+(use-package nix-mode)
 
 
 (use-package yaml-mode)
