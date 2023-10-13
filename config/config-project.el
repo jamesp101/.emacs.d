@@ -36,8 +36,7 @@
   :after (treemacs all-the-icons))
 
 
-(use-package vterm)
-
+(use-package eat)
 
 (use-package magit
   :config

@@ -34,10 +34,8 @@
 (evil-define-key 'normal 'global (kbd "<SPC>pc") '("Eshell" . projectile-run-eshell))
 
 ;; Temrinal
-(evil-define-key 'normal 'global (kbd "<SPC>mm") '("Terminal" . aweshell-toggle))
-(evil-define-key 'normal 'global (kbd "<SPC>mt") '("Dedicated Terminal Toggle" . aweshell-dedicated-toggle))
-(evil-define-key 'normal 'global (kbd "<SPC>mn") '("Terminal ->" . aweshell-next))
-(evil-define-key 'normal 'global (kbd "<SPC>mp") '("Terminal <-" . aweshell-prev))
+(evil-define-key 'normal 'global (kbd "C-`") '("Terminal" . eat))
+(evil-define-key 'normal 'global (kbd "<SPC>pt") '("Project Terminal" . eat-project))
 
 (evil-define-key 'normal 'global (kbd "<SPC>r") '("Recent File" . consult-recent-file))
 
