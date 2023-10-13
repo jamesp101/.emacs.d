@@ -12,13 +12,8 @@
   (setq projectile-enable-caching t)
 
   :config
-  (projectile-mode)
+  (projectile-mode))
 
-  :hook
-  (treemacs-mode . (lambda ()
-                     (solaire-mode)
-                     (treemacs-load-theme "all-the-icons")
-                     (hide-mode-line-mode))))
 
 
 (use-package consult-projectile
@@ -26,8 +21,7 @@
 
 
 (use-package treemacs
-  :hook
-  (treemacs-mode . solaire-mode))
+  :elpaca t)
 
 (use-package treemacs-magit
   :after (treemacs magit))
@@ -41,11 +35,6 @@
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons))
 
-
-(use-package eshell
-  :straight nil
-  :config
-  (company-mode nil))
 
 (use-package vterm)
 

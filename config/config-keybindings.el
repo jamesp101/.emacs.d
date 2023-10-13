@@ -1,6 +1,7 @@
 ;;; config-keybindings.el -*- lexical-binding: t; -*-
 
 
+(elpaca-wait)
 (evil-leader/set-leader "SPC") 
 
 

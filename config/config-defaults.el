@@ -1,5 +1,6 @@
 ;;; config-defaults.el -*- lexical-binding: t; -*-
 (use-package emacs
+  :elpaca nil
   :init
   (setq global-auto-revert-non-file-buffers t)
 
@@ -42,7 +43,6 @@
 
   (setq delete-by-moving-to-trash t)
 
-
   (setq auto-save-list-file-prefix (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
 
   :config
@@ -53,13 +53,11 @@
 
 
 (use-package display-line-numbers
-  :straight nil
-  :hook (prog-mode . display-line-numbers-mode)
-  :init
-  (setq display-line-numbers 'relative))
-
+  :elpaca nil
+  :hook (prog-mode . display-line-numbers-mode))
 
 (use-package so-long
+  :elpaca nil
   :init
   (setq-default bidi-paragraph-direction 'left-to-right)
   (setq-default bidi-inhabit-bpa t)
@@ -67,10 +65,8 @@
   (global-so-long-mode t))
 
 
-
-
 (use-package simple
-  :straight nil
+  :elpaca nil
   :init
   (add-hook 'prog-mode-hook #'(lambda () (toggle-truncate-lines nil)))
   (add-hook 'fundamental-mode-hook #'(lambda () (toggle-truncate-lines t))))
@@ -80,12 +76,13 @@
 (add-hook 'after-init-hook #'recentf-mode)
 
 (use-package special-mode
-  :straight nil
+  :elpaca nil
   :after solaire-mode
   :hook (special-mode . solaire-mode))
 
 
 (use-package eshell
+  :elpaca nil
   :init
   (setq eshell-directory-name
         (expand-file-name ".cache/eshell" user-emacs-directory)))

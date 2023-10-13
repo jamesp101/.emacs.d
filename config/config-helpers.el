@@ -1,7 +1,6 @@
 ;;; config-helpers.el -*- lexical-binding: t; -*- 
 
 
-
 (use-package yasnippet
   :hook
   (prog-mode . yas-minor-mode))
@@ -41,10 +40,11 @@
   (setq dashboard-items '((recents . 5 )
 			  (projects  . 5)))) 
 
+
 (use-package which-key
   :config
   (which-key-mode))
 
-(use-package hide-mode-line)
+
 
 (provide 'config-helpers)

@@ -1,14 +1,15 @@
 ;;; config-ui -*- lexical-binding: t; -*-
 
 
-(use-package modus-themes)
+(use-package modus-themes
+  :elpaca t)
 (use-package doom-themes
-  :config
-  (load-theme 'modus-vivendi-tinted t))
+  :elpaca t)
 
+(use-package catppuccin-theme
+  :elpaca t)
 
 (use-package doom-modeline
-  :init
   :config
   (display-battery-mode)
   (doom-modeline-mode))
@@ -24,8 +25,7 @@
 
 
 (use-package nano-theme
-  :straight
-  (:host github
+  :elpaca (:host github
          :repo "rougier/nano-theme"
          :type git))
 

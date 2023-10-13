@@ -4,10 +4,8 @@
 (use-package vertico
   :custom
   (vertico-cycle t)
-
-  :hook
-  (after-init . vertico-mode)
-
+  :init
+  (vertico-mode)
   :bind (:map vertico-map
 	      ("C-j" . vertico-next)
 	      ("C-k" . vertico-previous)

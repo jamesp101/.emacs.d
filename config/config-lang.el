@@ -9,10 +9,10 @@
 (use-package lsp-pyright
   :after (lsp python))
 
-(use-package dap-python
-  :straight nil
-  :after python
-  (require 'dap-python))
+;;(use-package dap-python
+;;  :after python
+;;  :elpaca t
+;;  (require 'dap-python))
 
 
 (use-package emmet-mode)
@@ -24,7 +24,10 @@
 	 ("\\.tsx\\'" . web-mode)
 	 ("\\.astro\\'" . web-mode)
 	 ("\\.astro\\'" . web-mode)
-	 ("\\.svelte\\'" . web-mode))
+   ("\\.svelte\\'" . web-mode)
+   ("\\.php\\'" . web-mode))
+
+
   :hook (web-mode . (lambda ()
 		  (tree-sitter-mode)
 		  (emmet-mode)
@@ -40,9 +43,9 @@
   :after (lsp web-mode)
   :init (setq lsp-tailwindcss-add-on-mode t))
 
-(use-package prisma-mode
-  :straight (:type git :host github :repo "pimeys/emacs-prisma-mode")
-  :mode ("\\.prisma\\'" . prisma-mode))
+;; (use-package prisma-mode
+;;   :elpaca (:type git :host github :repo "pimeys/emacs-prisma-mode")
+;;   :mode ("\\.prisma\\'" . prisma-mode))
 
 
 ;;; Dart/Flutter
@@ -74,6 +77,9 @@
   :hook (json-mode . (lambda ()
 		       (tree-sitter-mode)
 		       (lsp-deferred))))
+
+
+
 
 (use-package yaml-mode)
 (use-package toml-mode)
