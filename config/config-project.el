@@ -20,9 +20,7 @@
   :after (consult projectile))
 
 
-(use-package treemacs
-  :elpaca t)
-
+(use-package treemacs)
 (use-package treemacs-magit
   :after (treemacs magit))
 
@@ -41,9 +39,13 @@
 (use-package magit
   :config
   (setq transient-history-file
-        (expand-file-name ".cache/lsp-session" user-emacs-directory)))
+        (expand-file-name ".cache/magit-transient" user-emacs-directory)))
+
+(use-package forge
+  :after magit)
 
 (use-package gitignore-snippets)
+(use-package gitignore-templates)
 
 (provide 'config-project)
 

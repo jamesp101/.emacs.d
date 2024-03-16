@@ -1,5 +1,4 @@
-;;; config-helpers.el -*- lexical-binding: t; -*- 
-
+;;
 
 (use-package yasnippet
   :hook
@@ -7,7 +6,6 @@
 
 (use-package yasnippet-snippets
   :after yasnippet)
-
 
 (use-package consult
   :bind
@@ -40,11 +38,18 @@
   (setq dashboard-items '((recents . 5 )
 			  (projects  . 5)))) 
 
-
 (use-package which-key
   :config
   (which-key-mode))
 
-
+(use-package copilot
+  :ensure (copilot :repo "copilot-emacs/copilot.el"
+                 :host github
+                 :files ("dist" "*.el"))
+  :hook (prog-mode . copilot-mode)
+  :custom (copilot-indent-warning-disable t)
+  :config
+    (setq copilot-indent-warning-disable t)
+    (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
 (provide 'config-helpers)

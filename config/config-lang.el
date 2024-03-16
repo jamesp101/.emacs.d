@@ -4,15 +4,9 @@
 ;;; Python
 (use-package python
   :hook (python-mode . (lambda ()
-			 (tree-sitter-mode t)
 			 (lsp-deferred))))
 (use-package lsp-pyright
   :after (lsp python))
-
-;;(use-package dap-python
-;;  :after python
-;;  :elpaca t
-;;  (require 'dap-python))
 
 
 (use-package emmet-mode)
@@ -24,21 +18,14 @@
 	 ("\\.tsx\\'" . web-mode)
 	 ("\\.astro\\'" . web-mode)
 	 ("\\.astro\\'" . web-mode)
-   ("\\.svelte\\'" . web-mode)
-   ("\\.php\\'" . web-mode))
+     ("\\.svelte\\'" . web-mode)
+     ("\\.php\\'" . web-mode))
 
 
   :hook (web-mode . (lambda ()
-		  (tree-sitter-mode)
 		  (emmet-mode)
 		  (lsp-deferred))))
 
-(use-package typescript-mode
-  :mode (("\\.ts\\'" . typescript-mode)
-	 ("\\.js\\'" . typescript-mode))
-  :hook (typescript-mode . (lambda ()
-			     (tree-sitter-mode)
-			     (lsp-deferred))))
 (use-package lsp-tailwindcss
   :after (lsp web-mode)
   :init (setq lsp-tailwindcss-add-on-mode t))
@@ -66,23 +53,49 @@
 
 
 ;;; GdScript-mode
-
 (use-package gdscript-mode
   :hook (gdscript-mode . (lambda ()
                            (lsp-deferred))))
 
 
-;;; Data
-(use-package json-mode
-  :hook (json-mode . (lambda ()
-		       (tree-sitter-mode)
-		       (lsp-deferred))))
 
 (use-package nix-mode)
 
+(use-package templ-ts-mode)
+(use-package go-ts-mode
+  :ensure nil
+  :custom (go-ts-mode-indent-offset 4))
 
-(use-package yaml-mode)
-(use-package toml-mode)
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+     (go-templ "https://github.com/vrischmann/tree-sitter-templ")))
+
+
+(defun install-treesitter-grammars () (interactive) 
+       (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+
+
+(use-package dotenv-mode
+  :mode (("\\.env\\'" . dotenv-mode)
+     ("\\.env\\.local\\'" . dotenv-mode)
+     ("\\.env\\.development\\'" . dotenv-mode)
+     ("\\.env\\.test\\'" . dotenv-mode)
+     ("\\.env\\.production" . dotenv-mode)))
 
 
 (provide 'config-lang)

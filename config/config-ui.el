@@ -1,13 +1,11 @@
 ;;; config-ui -*- lexical-binding: t; -*-
 
 
-(use-package modus-themes
-  :elpaca t)
-(use-package doom-themes
-  :elpaca t)
+(use-package modus-themes)
+(use-package doom-themes)
 
 (use-package catppuccin-theme
-  :elpaca t)
+  )
 
 (use-package doom-modeline
   :config
@@ -22,12 +20,6 @@
   :hook
   (doom-modeline . nyan-mode))
 
-
-
-(use-package nano-theme
-  :elpaca (:host github
-         :repo "rougier/nano-theme"
-         :type git))
 
 (use-package nano-modeline)
 

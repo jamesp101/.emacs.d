@@ -1,14 +1,19 @@
 ;;; config-ide.el -*- lexical-binding: t; -*- 
-
 (use-package lsp-mode
   :init
   (setq lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory))
+  :config
+  
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection '("templ" "lsp"))
+                        :major-modes '(templ-ts-mode)
+                        :server-id 'bash-language-server))
   :custom
   (lsp-signature-auto-activate t)
   (lsp-signature-doc-lines 3)
   (lsp-completion-show-detail t)
   (lsp-completion-show-kind t)
-  (lsp-signature-re nder-documentation t))
+  (lsp-signature-render-documentation t))
  
 (use-package lsp-ui
   :after lsp-mode
@@ -29,14 +34,6 @@
 (use-package dap-mode
   :init
   (setq dap-breakpoints-file (expand-file-name ".cache/.dap-breakpoints" user-emacs-directory)))
-
-(use-package tree-sitter
-  :defer t
-  :hook (tree-sitter . (lambda ()
-			 (tree-sitter-hl-mode))))
-(use-package tree-sitter-langs
-  :defer t
-  :after tree-sitter)
 
 
 (use-package flycheck

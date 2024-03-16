@@ -12,6 +12,7 @@
 ;; ;; LSP Keybinding
 (evil-define-key 'normal 'global (kbd "<SPC>lr") '("Rename" . lsp-rename))
 (evil-define-key 'normal 'global (kbd "<SPC>la") '("Action" . lsp-execute-code-action ))
+(evil-define-key 'normal 'global (kbd "<C-.>") '("Action" . lsp-execute-code-action ))
 
 (evil-define-key 'normal 'global (kbd "<SPC>le") '("Errors" . lsp-treemacs-errors-list))
 (evil-define-key 'normal 'global (kbd "<SPC>ld") '("Definition" . lsp-find-definition))
@@ -21,7 +22,7 @@
 (evil-define-key 'normal 'global (kbd "<SPC>lh") '("Hover" . lsp-ui-doc-glance))
 (evil-define-key 'normal 'global (kbd "<SPC>lf") '("Format Buffer" . lsp-format-buffer))
 (evil-define-key 'normal 'global (kbd "<SPC>?") '("Doc" . lsp-ui-doc-show))
-
+(evil-define-key 'normal 'global (kbd "K") '("Doc" . lsp-ui-doc-toggle))
 (evil-define-key 'normal 'global (kbd "<SPC>ly") '("YasSnippet" . consult-yasnippet))
 ;;
 
@@ -36,9 +37,17 @@
 ;; Temrinal
 (evil-define-key 'normal 'global (kbd "C-`") '("Terminal" . eat))
 (evil-define-key 'normal 'global (kbd "<SPC>pt") '("Project Terminal" . eat-project))
-
 (evil-define-key 'normal 'global (kbd "<SPC>r") '("Recent File" . consult-recent-file))
 
+;; Org Roam
+(evil-define-key 'normal 'global (kbd "<SPC>oc") '("Org-Roam Caputer" . org-roam-capture))
+(evil-define-key 'normal 'global (kbd "<SPC>og") '("Org-Roam Graph" . org-roam-graph))
+(evil-define-key 'normal 'global (kbd "<SPC>of") '("Org-Roam Find" . org-roam-node-find))
+(evil-define-key 'normal 'global (kbd "<SPC>oi") '("Org-Roam Find" . org-roam-insert))
+(evil-define-key 'normal 'global (kbd "<SPC>oi") '("Org-Roam Find" . org-roam-insert))
+;; Org Roam Dailies
+(evil-define-key 'normal 'global (kbd "<SPC>od") '("Org-Roam Capture Today" . org-roam-dailies-capture-today))
+(evil-define-key 'normal 'global (kbd "<SPC>od") '("Org-Roam Capture Today" . org-roam-dailies-capture-today))
 
 ;; Window
 (setq aw-keys '(?a ?s ?d ?d ?f ?g ?h ?j ?k ?l ))
