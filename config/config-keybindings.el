@@ -56,7 +56,6 @@
 
 (evil-define-key 'normal 'global (kbd "<SPC>Y") '("Browse kill ring" . browse-kill-ring))
 (evil-define-key 'normal 'global (kbd "<SPC>y") '("Kill Ring" . yank-from-kill-ring))
-
 (evil-define-key 'normal 'global (kbd "<SPC>f") '("Goto Char" . avy-goto-char))
 
 
@@ -80,6 +79,10 @@
 (global-set-key (kbd "C-M-h") 'windmove-swap-states-left)
 (global-set-key (kbd "C-M-j") 'windmove-swap-states-down)
 (global-set-key (kbd "C-M-k") 'windmove-swap-states-up)
+
+
+(evil-define-key 'normal 'global (kbd "<SPC>.")
+  '("Harpoon Quick Menu Hydra" . harpoon-quick-menu-hydra))
 
 
 (provide 'config-keybindings)

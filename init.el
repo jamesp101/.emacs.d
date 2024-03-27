@@ -43,7 +43,7 @@
 
 
 (add-to-list 'load-path
-	     (expand-file-name "config/" user-emacs-directory))
+	         (expand-file-name "config/" user-emacs-directory))
 
 
 
@@ -51,7 +51,8 @@
           (lambda ()
             (setq gc-cons-threshold 167777216
                   gc-cons-percentage 0.1))
-          (setq file-name-handler-alist config/file-name-handler))
+          (setq file-name-handler-alist config/file-name-handler)
+          (setq read-process-output-max (* 1024 1024)))
 
 
 (add-hook 'minibuffer-setup-hook #'(lambda ()
@@ -60,7 +61,7 @@
 (add-hook 'minibuffer-setup-hook #'(lambda ()
 
                                      (setq gc-cons-threshold 167777216)))
-          
+
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
   (setq elpaca-use-package-by-default t))

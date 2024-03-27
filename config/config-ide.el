@@ -3,11 +3,10 @@
   :init
   (setq lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory))
   :config
-  
   (lsp-register-client (make-lsp-client
                         :new-connection (lsp-stdio-connection '("templ" "lsp"))
                         :major-modes '(templ-ts-mode)
-                        :server-id 'bash-language-server))
+                        :server-id 'templ-language-server))
   :custom
   (lsp-signature-auto-activate t)
   (lsp-signature-doc-lines 3)

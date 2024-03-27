@@ -1,4 +1,3 @@
-;;
 
 (use-package yasnippet
   :hook
@@ -51,5 +50,8 @@
   :config
     (setq copilot-indent-warning-disable t)
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+
+(use-package harpoon
+  :custom (harpoon-cache-file "~/.emacs.d/.cache/harpoon"))
 
 (provide 'config-helpers)

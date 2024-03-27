@@ -4,8 +4,7 @@
 (use-package modus-themes)
 (use-package doom-themes)
 
-(use-package catppuccin-theme
-  )
+(use-package catppuccin-theme)
 
 (use-package doom-modeline
   :config
@@ -40,11 +39,6 @@
 
 (use-package vi-tilde-fringe
   :hook (prog-mode . vi-tilde-fringe-mode))
-
-
-
-
-
 
 
 (provide 'config-ui)
