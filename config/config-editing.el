@@ -15,10 +15,6 @@
   :after evil
   :hook (evil-mode . evil-mc-mode))
 
-(use-package evil-leader
-  :after evil
-  :config  (global-evil-leader-mode))
-
 (use-package evil-surround
   :after evil
   :config (global-evil-surround-mode))
@@ -48,10 +44,9 @@
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
   (setq undo-fu-session-directory
-	(expand-file-name ".cache/undo-fu-session" user-emacs-directory))
+	(expand-file-name "undo-fu-session/" my/cache-directory))
   :config
   (undo-fu-session-global-mode))
-
 
 (use-package editorconfig
   :hook (prog-mode . editorconfig-mode))

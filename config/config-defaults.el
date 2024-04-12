@@ -68,9 +68,13 @@
   (add-hook 'prog-mode-hook #'(lambda () (toggle-truncate-lines nil)))
   (add-hook 'fundamental-mode-hook #'(lambda () (toggle-truncate-lines t))))
 
-
-(setq recentf-save-file (expand-file-name ".cache/recentf" user-emacs-directory))
-(add-hook 'after-init-hook #'recentf-mode)
+(use-package recentf
+  :ensure nil
+  :custom
+  (recentf-save-file (expand-file-name "recentf.el" my/var-directory))
+  :hook
+  (after-init . recentf-mode))
+  
 
 (use-package special-mode
   :ensure nil
@@ -81,6 +85,6 @@
   :ensure nil
   :init
   (setq eshell-directory-name
-        (expand-file-name ".cache/eshell" user-emacs-directory)))
+        (expand-file-name "eshell/" my/cache-directory)))
 
 (provide 'config-defaults)

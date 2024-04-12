@@ -3,6 +3,7 @@
 
 ;;; Python
 (use-package python
+  :ensure nil
   :hook (python-mode . (lambda ()
 			 (lsp-deferred))))
 (use-package lsp-pyright
@@ -38,8 +39,7 @@
 ;;; Dart/Flutter
 (use-package dart-mode
   :mode ("\\.dart\\'" . dart-mode)
-  :hook (dart-mode . (lambda ()
-		       (lsp-deferred))))
+  :hook (dart-mode . (lambda () (lsp-deferred))))
 
 
 (use-package lsp-dart
@@ -51,17 +51,18 @@
 
 
 
-
 ;;; GdScript-mode
 (use-package gdscript-mode
   :hook (gdscript-mode . (lambda ()
-                           (lsp-deferred))))
-
-
+                           (lsp-deferrd))))
 
 (use-package nix-mode)
 
-(use-package templ-ts-mode)
+(use-package templ-ts-mode
+  :after lsp
+
+  :hook (templ-ts-mode . (lambda () lsp-deferred)))
+
 (use-package go-ts-mode
   :ensure nil
   :custom (go-ts-mode-indent-offset 4))
@@ -71,6 +72,8 @@
      (cmake "https://github.com/uyha/tree-sitter-cmake")
      (css "https://github.com/tree-sitter/tree-sitter-css")
      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
      (html "https://github.com/tree-sitter/tree-sitter-html")
      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
      (json "https://github.com/tree-sitter/tree-sitter-json")
@@ -81,13 +84,12 @@
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (go "https://github.com/tree-sitter/tree-sitter-go")
-     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-     (go-templ "https://github.com/vrischmann/tree-sitter-templ")))
-
+     (templ "https://github.com/camdencheek/tree-sitter-go-mod")))
 
 (defun install-treesitter-grammars () (interactive) 
        (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+
+
 
 
 (use-package dotenv-mode

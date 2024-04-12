@@ -1,7 +1,7 @@
 
 (use-package yasnippet
   :hook
-  (prog-mode . yas-minor-mode))
+  (after-init . yas-global-mode))
 
 (use-package yasnippet-snippets
   :after yasnippet)
@@ -20,15 +20,15 @@
 
 (use-package transient
   :init
-  (setq transient-history-file (expand-file-name "history.el" user-emacs-directory )
-        transient-levels-file (expand-file-name "levels.el"   user-emacs-directory)
-        transient-values-file (expand-file-name "values.el"   user-emacs-directory)))
+  (setq transient-history-file (expand-file-name "history.el" my/cache-directory  )
+        transient-levels-file (expand-file-name "levels.el"   my/cache-directory )
+        transient-values-file (expand-file-name "values.el"   my/cache-directory )))
 
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
   :init
-  (setq dashboard-startup-banner "~/.emacs.d/icon.png")
+  (setq dashboard-startup-banner (expand-file-name "icon.png" user-emacs-directory))
   (setq dashboard-show-shortcuts t)
   (setq dashboard-center-content t)
   (setq dashboard-set-navigator t)
@@ -52,6 +52,13 @@
     (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
 (use-package harpoon
-  :custom (harpoon-cache-file "~/.emacs.d/.cache/harpoon"))
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>." . harpoon-find-file))
+  :custom (harpoon-cache-file (expand-file-name "harpoon/" my/cache-directory)))
+
+(use-package avy
+  :bind
+  ("C-;" . avy-goto-char))
 
 (provide 'config-helpers)

@@ -15,6 +15,11 @@
 
 
 
+(setq my/cache-directory
+      (expand-file-name ".cache/" user-emacs-directory))
+
+(setq my/var-directory
+      (expand-file-name ".vars/" user-emacs-directory))
 
 
 
@@ -30,10 +35,14 @@
 
     (when (fboundp 'startup-redirect-eln-cache)
     (if (version< emacs-version "29")
-        (add-to-list 'native-comp-eln-load-path (convert-standard-filename (expand-file-name ".cache/eln-cache/" user-emacs-directory)))
-      (startup-redirect-eln-cache (convert-standard-filename (expand-file-name ".cache/eln-cache/" user-emacs-directory)))))
+        (add-to-list 'native-comp-eln-load-path
+                     (convert-standard-filename (expand-file-name "eln-cache/" my/cache-directory)))
 
-  (add-to-list 'native-comp-eln-load-path (expand-file-name ".cache/eln-cache/" user-emacs-directory)))
+      (startup-redirect-eln-cache
+       (convert-standard-filename (expand-file-name "eln-cache/" my/cache-directory)))))
+
+    (add-to-list 'native-comp-eln-load-path
+                 (expand-file-name "eln/" my/cache-directory)))
 
 (setq auto-save-list-file-prefix (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
 

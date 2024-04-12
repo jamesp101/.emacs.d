@@ -47,8 +47,6 @@
   :config
   (global-company-mode))
   
-(use-package company-tabnine
-  :after company)
 
 (use-package company-posframe
   :after company
