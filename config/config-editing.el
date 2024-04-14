@@ -39,6 +39,14 @@
   (setq undo-limit 6710886400)
   (setq evil-undo-system 'undo-fu))
 
+
+(use-package expreg
+  :bind (:map evil-normal-state-map
+              ("M-." . expreg-expand)
+              ("M-S-." . expreg-contract)))
+  
+
+
 (use-package undo-fu-session
   :after undo-fu
   :init
@@ -50,5 +58,7 @@
 
 (use-package editorconfig
   :hook (prog-mode . editorconfig-mode))
+
+(use-package vundo)
 
 (provide 'config-editing)

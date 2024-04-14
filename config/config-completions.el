@@ -37,19 +37,23 @@
   (all-the-icons-completion-mode t))
 
 
-(use-package company
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-min-width 40)
+  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0.1)
   :init
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0)
-  (setq company-icon-size 25)
-  (setq company-tooltip-minimum-width 64)
-  (setq company-tooltip-maximum-width 64)
-  :config
-  (global-company-mode))
-  
+  (global-corfu-mode)
+  (corfu-echo-mode)
+  (corfu-popupinfo-mode))
 
-(use-package company-posframe
-  :after company
-  :hook (company-mode . company-posframe-mode))
+(use-package nerd-icons-corfu
+  :after corfu
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package cape)
+(use-package corfu-terminal)
 
 (provide 'config-completions)

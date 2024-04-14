@@ -58,3 +58,4 @@ forge-database.sqlite
 history.el
 # End of https://www.toptal.com/developers/gitignore/api/emacs
 
+session.*

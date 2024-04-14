@@ -12,13 +12,6 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-
-(use-package org-bullets
-  :custom
-  (org-bullets-bullet-list '("" "" "" ))
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode))
-
 (use-package org-download
   :after org)
 
@@ -44,11 +37,6 @@
   (org-roam-db-autosync-mode))
 
 
-(use-package lsp-grammarly
-  :after (lsp)
-  :config
-  (add-hook 'org-mode-hook 'lsp-deferred))
-
 (use-package org-re-reveal
   :after org
   :config
@@ -58,4 +46,12 @@
 (use-package org-tree-slide
   :after org)
 
+(use-package org-modern-indent
+  :ensure (org-modern-indent
+           :host github
+           :repo "jdtsmith/org-modern-indent")
+  :hook (org-mode . org-modern-indent-mode))
+
+(use-package org-modern
+  :hook (org-mode . org-modern))
 (provide 'config-org)

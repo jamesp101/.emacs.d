@@ -2,12 +2,12 @@
 
 
 ;;; Python
-(use-package python
-  :ensure nil
-  :hook (python-mode . (lambda ()
-			 (lsp-deferred))))
-(use-package lsp-pyright
-  :after (lsp python))
+;; (use-package python
+;;   :ensure nil
+;;   :hook (python-mode . (lambda ()
+;; 			 (lsp-deferred))))
+;; (use-package lsp-pyright
+;;   :after (lsp python))
 
 
 (use-package emmet-mode)
@@ -22,14 +22,8 @@
      ("\\.svelte\\'" . web-mode)
      ("\\.php\\'" . web-mode))
 
-
   :hook (web-mode . (lambda ()
-		  (emmet-mode)
-		  (lsp-deferred))))
-
-(use-package lsp-tailwindcss
-  :after (lsp web-mode)
-  :init (setq lsp-tailwindcss-add-on-mode t))
+		  (emmet-mode))))
 
 ;; (use-package prisma-mode
 ;;   :elpaca (:type git :host github :repo "pimeys/emacs-prisma-mode")
@@ -42,12 +36,12 @@
   :hook (dart-mode . (lambda () (lsp-deferred))))
 
 
-(use-package lsp-dart
-  :after (lsp dart-mode)
-  :config
-    (with-eval-after-load 'projectile
-    (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
-    (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
+;; (use-package lsp-dart
+;;   :after (lsp dart-mode)
+;;   :config
+;;     (with-eval-after-load 'projectile
+;;     (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+;;     (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
 
 
 
@@ -58,11 +52,16 @@
 
 (use-package nix-mode)
 
+
 (use-package templ-ts-mode
-  :after lsp
+  :init
+  :mode ("\\.templ\\'" . templ-ts-mode)
+  :hook
+  (templ-ts-mode . eglot)
+  (templ-ts-mode . auto-rename-tag-mode)
+  )
 
-  :hook (templ-ts-mode . (lambda () lsp-deferred)))
-
+(use-package auto-rename-tag)
 (use-package go-ts-mode
   :ensure nil
   :custom (go-ts-mode-indent-offset 4))
