@@ -4,7 +4,18 @@
   (evil-want-integration t)
   (evil-want-keybinding nil)
   :config
-  (evil-mode))
+  (evil-mode)
+  (electric-pair-mode))
+  ;:bind (:map evil-normal-state-map
+  ;            ("<SPC>0" .  delete-window)
+  ;            ("<SPC>1" .  delete-other-windows)
+  ;            ("<SPC>2" .  split-window-below)
+  ;            ("<SPC>3" .  split-window-right)))
+
+(use-package hs-minor-mode
+  :ensure nil
+  :hook (prog-mode . hs-minor-mode))
+
 
 (use-package evil-commentary
   :after evil
@@ -35,7 +46,7 @@
 
 (use-package undo-fu
   :after evil
-  :init
+  :config
   (setq undo-limit 6710886400)
   (setq evil-undo-system 'undo-fu))
 
@@ -51,4 +62,12 @@
 (use-package editorconfig
   :hook (prog-mode . editorconfig-mode))
 
+
+(use-package expreg
+  :bind (:map evil-normal-state-map
+              ("M-." . expreg-expand)
+              ("M-S-." . expreg-contract)))
+
+ (use-package vundo)
+ 
 (provide 'config-editing)

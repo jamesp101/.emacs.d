@@ -1,9 +1,6 @@
 ;;; config-org -*- lexical-binding: t; -*-
-
 (use-package org
-  :config
-  (add-hook 'org-mode-hook #'(lambda ()
-                               (org-indent-mode))))
+  :ensure nil)
 
 (use-package evil-org
   :after evil
@@ -11,13 +8,6 @@
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
-
-
-(use-package org-bullets
-  :custom
-  (org-bullets-bullet-list '("" "" "" ))
-  :config
-  (add-hook 'org-mode-hook 'org-bullets-mode))
 
 (use-package org-download
   :after org)
@@ -27,27 +17,17 @@
 ;;   :hook (org-mode . org-pdftools-setup-link))
 
 
-(use-package org-roam
-  :after org
-  :init
-  (setq my/org-roam-directory "~/Documents/org-roam")
-  (setq org-roam-db-location
-        (expand-file-name "~/Documents/org-roam.sqlite" user-emacs-directory))
+;; (use-package org-roam
+;;   :after org
+;;   :init
+;;   (setq my/org-roam-directory "~/proton-drive/org-roam")
+;;   (setq org-roam-db-location
+;;         (expand-file-name "org-roam.sqlite" user-emacs-directory))
 
-  (unless (file-directory-p my/org-roam-directory)
-    (make-directory my/org-roam-directory))
+;;   :config
+;;   (setq org-roam-node-display-template (concat "${title:*} ${tags:10} ${file:10"))
+;;   (org-roam-db-autosync-mode))
 
-  (setq org-roam-directory my/org-roam-directory)
-
-  :config
-  (setq org-roam-node-display-template (concat "${title:*} ${tags:10} ${file:10"))
-  (org-roam-db-autosync-mode))
-
-
-(use-package lsp-grammarly
-  :after (lsp)
-  :config
-  (add-hook 'org-mode-hook 'lsp-deferred))
 
 (use-package org-re-reveal
   :after org
@@ -58,4 +38,12 @@
 (use-package org-tree-slide
   :after org)
 
+(use-package org-modern-indent
+  :ensure (org-modern-indent
+           :host github
+           :repo "jdtsmith/org-modern-indent")
+  :hook (org-mode . org-modern-indent-mode))
+
+(use-package org-modern
+  :hook (org-mode . org-modern-mode))
 (provide 'config-org)

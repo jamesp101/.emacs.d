@@ -15,7 +15,7 @@
   ;; Better Scrolling
   (setq auto-window-vscroll nil)
   (setq fast-but-imprecise-scrolling t)
-  (setq scroll-conservatively 101)
+  (setq scroll-conservatively 15)
   (setq scroll-margin 0)
   (setq scroll-preserve-screen-position t)
 
@@ -41,6 +41,9 @@
 
   (setq auto-save-list-file-prefix
         (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
+
+  (setq warning-minimum-level :error)
+
 
   :config
   (global-auto-revert-mode 1)
@@ -87,4 +90,8 @@
   (setq eshell-directory-name
         (expand-file-name "eshell/" my/cache-directory)))
 
+(use-package desktop
+  :ensure nil
+  :config
+  (desktop-save-mode))
 (provide 'config-defaults)

@@ -36,20 +36,41 @@
   (all-the-icons-completion-marginalia-setup)
   (all-the-icons-completion-mode t))
 
-
 (use-package company
-  :init
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0)
-  (setq company-icon-size 25)
-  (setq company-tooltip-minimum-width 64)
-  (setq company-tooltip-maximum-width 64)
+  :custom
+  (company-minimum-prefix-length 0)
+  (company-tooltip-align-annotations t)
+  (company-idle-delay 0.1)
+  (company-tooltip-maximum-width 100)
+  (company-tooltip-minimum-width 100)
   :config
-  (global-company-mode))
-  
+  (global-company-mode)
+  :bind
+  ("C-M-i" . company-complete))
 
-(use-package company-posframe
-  :after company
-  :hook (company-mode . company-posframe-mode))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+;; (use-package corfu
+;;   :custom
+;;   (corfu-auto t)
+;;   (corfu-min-width 40)
+;;   (corfu-auto-prefix 1)
+;;   (corfu-auto-delay 0.1)
+;;   :init
+;;   (global-corfu-mode)
+;;   (corfu-echo-mode)
+;;   (corfu-popupinfo-mode))
+
+;; (use-package nerd-icons-corfu
+;;   :after corfu
+;;   :init
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+;; (use-package cape)
+;; (use-package corfu-terminal)
+
+
 
 (provide 'config-completions)

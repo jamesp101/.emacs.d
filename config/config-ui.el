@@ -32,13 +32,25 @@
 
 (use-package solaire-mode)
 
+(use-package focus
+  :bind (:map evil-normal-state-map
+              ("<SPC>of" . focus-mode)))
+
+
+(use-package lsp-focus
+  :after (lsp focus)
+  :hook (focus-mode  . lsp-focus-mode))
+
+
 (use-package pulsar
-  :hook
-  (after-init . pulsar-mode))
+  :config
+  (pulsar-global-mode))
 
 
 (use-package vi-tilde-fringe
   :hook (prog-mode . vi-tilde-fringe-mode))
+
+(use-package kaolin-themes)
 
 
 (provide 'config-ui)

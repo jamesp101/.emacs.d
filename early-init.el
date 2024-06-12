@@ -14,7 +14,6 @@
 (setq file-name-handler-alist nil)
 
 
-
 (setq my/cache-directory
       (expand-file-name ".cache/" user-emacs-directory))
 
@@ -46,7 +45,7 @@
 
 (setq auto-save-list-file-prefix (expand-file-name ".cache/auto-save/.auto-save-" user-emacs-directory))
 
-
+(setenv "LSP_USE_PLISTS" "true")
 
 (setq inhibit-startup-message t)
 (push '(tool-bar-lines . 0) default-frame-alist)

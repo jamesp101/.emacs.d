@@ -39,32 +39,50 @@
 ;;; Dart/Flutter
 (use-package dart-mode
   :mode ("\\.dart\\'" . dart-mode)
-  :hook (dart-mode . (lambda () (lsp-deferred))))
+  :custom
+  (lsp-dart-flutter-sdk-dir "~/.fvm/flutter_sdk")
+  (lsp-dart-sdk-dir "~/.fvm/flutter_sdk/bin/cache/dart-sdk/")
+  (lsp-dart-flutter-executable "flutter")
+
+  :init
+  (dap-register-debug-template "LINUX :: Custom Debug"
+                               (list :flutterPlatform "x86_64"
+                                     :program "lib/main.dart"
+                                     :args '()
+                                     :type ))
+  
+  :hook
+  (dart-mode . lsp-deferred)
+  (dart-mode . (lambda () (indent-bars-mode nil))))
+
+
+(use-package flutter)
+ 
 
 
 (use-package lsp-dart
-  :after (lsp dart-mode)
-  :config
-    (with-eval-after-load 'projectile
-    (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
-    (add-to-list 'projectile-project-root-files-bottom-up "BUILD")))
-
-
+  :after (lsp dart-mode))
 
 ;;; GdScript-mode
 (use-package gdscript-mode
-  :hook (gdscript-mode . (lambda ()
-                           (lsp-deferrd))))
+  :hook (gdscript-ts-mode . (lsp-deferred)))
 
 (use-package nix-mode)
 
 (use-package templ-ts-mode
-  :after lsp
+  :mode ("\\.templ\\'" . templ-ts-mode)
+  :hook
+  (templ-ts-mode . lsp-deferred)
+  (templ-ts-mode . emmet-mode)
+  (templ-ts-mode . auto-rename-tag-mode))
 
-  :hook (templ-ts-mode . (lambda () lsp-deferred)))
+(use-package auto-rename-tag)
 
 (use-package go-ts-mode
   :ensure nil
+  :mode ("\\.go\\'" . go-ts-mode)
+  :hook
+  (go-ts-mode . lsp-deferred)
   :custom (go-ts-mode-indent-offset 4))
 
 (setq treesit-language-source-alist
@@ -84,20 +102,23 @@
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (templ "https://github.com/camdencheek/tree-sitter-go-mod")))
+     (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
+    (csharp "https://github.com/tree-sitter/csharp-tree-sitter")
+     ))
 
 (defun install-treesitter-grammars () (interactive) 
        (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
 
 
-
-
 (use-package dotenv-mode
   :mode (("\\.env\\'" . dotenv-mode)
-     ("\\.env\\.local\\'" . dotenv-mode)
-     ("\\.env\\.development\\'" . dotenv-mode)
-     ("\\.env\\.test\\'" . dotenv-mode)
-     ("\\.env\\.production" . dotenv-mode)))
+     ("\\.env\\.local\\'" . dotenv-mode)))
+(use-package yaml-ts-mode
+  :ensure nil
+  :mode (("\\.yaml\\'" . yaml-ts-mode)
+         ("\\.yml\\'" . yaml-ts-mode)))
 
+(use-package zig-mode
+  :mode (("\\.zig\\'"  . zig-mode)))
 
 (provide 'config-lang)

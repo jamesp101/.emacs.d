@@ -8,9 +8,12 @@
 
 (treemacs-load-theme 'all-the-icons)
 (setq treemacs-position 'right)
-(setq-default copilot-indent-offset-warning-disable t)
 (setq-default line-spacing 4)
 
-(consult-theme 'doom-monokai-ristretto)
+
+(consult-theme 'kaolin-dark)
+
+
+
 
 

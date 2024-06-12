@@ -1,32 +1,17 @@
 ;;; config-project -*- lexical-binding: t; -*-
 
 
-(use-package projectile
-  :init
-  (setq projectile-cache-file
-        (expand-file-name "projectile.cache" my/cache-directory))
-  (setq projectile-known-projects-file 
-        (expand-file-name "projectile-bookmarks.el" my/var-directory))
-  (setq projectile-indexing-method 'alien)
-  (setq projectile-sort-order 'recentf-active)
-  (setq projectile-enable-caching t)
+(use-package project
+  :ensure nil
+  :after evil)
 
+(use-package consult-project-extra
   :bind
   (:map evil-normal-state-map
-        ("<SPC>SPC" .  consult-projectile)
-        ("<SPC>pp" .  consult-projectile-switch-project)
-        ("<SPC>pa" . projectile-known-projects)
-        ("<SPC>pr" . consult-projectile-recentf)
+        ("<SPC><SPC>" . consult-project-extra-find)
+        ("<SPC>pp" . project-switch-project)
         ("<SPC>pf" . consult-ripgrep))
- 
-  :config
-  (projectile-mode))
-  
-
-
-(use-package consult-projectile
-  :after (consult projectile))
-
+  :after project)
 
 (use-package treemacs
   :custom
@@ -41,13 +26,7 @@
         ("<SPC>t <TAB>" . treemacs-switch-workspace))
 
   (:map treemacs-mode-map
-        ("<SPC>SPC" .  consult-projectile)
-        ("<SPC>pp" .  consult-projectile-switch-project)
-        ("<SPC>pa" . projectile-known-projects)
-        ("<SPC>pr" . consult-projectile-recentf)
-        ("<SPC>pf" . consult-ripgrep))
-
-  )
+        ("<SPC>pf" . consult-ripgrep)))
   
 
 (use-package treemacs-magit
@@ -56,16 +35,15 @@
 (use-package treemacs-evil
   :after (treemacs evil))
 
-(use-package treemacs-projectile
-  :after (treemacs projectile))
-
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons))
 
 
 (use-package eat
   :bind
-  ("C-`" . eat-project))
+  (:map evil-normal-state-map
+        ("<SPC>tp" . eat-project)
+        ("<SPC>to" . eat-project-other-window)))
 
 (use-package magit
   :bind
@@ -76,9 +54,18 @@
   (setq transient-history-file
         (expand-file-name "magit-transient/" my/cache-directory)))
 
-
+(use-package git-modes)
 (use-package gitignore-snippets)
 (use-package gitignore-templates)
+
+
+(use-package color-rg
+  :ensure (color-rg
+           :host github
+           :repo "manateelazycat/color-rg")
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>pF" . color-rg-search-input)))
 
 (provide 'config-project)
 
