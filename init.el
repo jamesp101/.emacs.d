@@ -60,7 +60,6 @@
 (add-hook 'minibuffer-setup-hook #'(lambda ()
 
                                      (setq gc-cons-threshold 167777216)))
-
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
   (setq elpaca-use-package-by-default t))
@@ -78,7 +77,7 @@
 (require 'config-project)
 (require 'config-org)
 
-(elpaca-wait)
-;; (require 'config-keybindings)
 
-(load-file (expand-file-name "config.el" user-emacs-directory))
+(elpaca-wait)
+(load-file
+ (expand-file-name "config.el" user-emacs-directory))

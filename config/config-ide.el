@@ -11,12 +11,15 @@
                     :server-id 'templ-ts-mode))
 
   :custom
+  (lsp-auto-guess-root t)
   (lsp-use-plists t)
   (lsp-signature-auto-activate t)
   (lsp-signature-doc-lines 4)
   (lsp-completion-show-detail t)
   (lsp-completion-show-kind t)
   (lsp-signature-render-documentation t)
+  (lsp-inlay-hint-enable t)
+  (lsp-tcp-cconnection-timeout 0.01)
   :bind
   (:map evil-normal-state-map
         ("C-." . lsp-execute-code-action)
@@ -60,20 +63,19 @@
 
 (use-package lsp-ui
   :after lsp
-  :init
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-doc-position 'at-point)
-
+  :custom
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-sideline-show-hover nil)
   :hook
   (lsp-mode . lsp-ui-doc-mode)
-  (lsp-mode . (lambda () (lsp-ui-sideline-mode nil)))
-
   :bind
   (:map evil-normal-state-map
-        ("K" . lsp-ui-doc-toggle)))
-
-
-
+        ("K" . lsp-ui-doc-toggle))
+  :config
+  (setq lsp-ui-sideline-show-diagnositcs nil)
+  (setq lsp-ui-sideline-enable nil)
+  )
 
 (use-package sideline
   :hook
@@ -94,7 +96,13 @@
 
 (use-package sideline-lsp
   :after sideline)
-(use-package sideline-flycheck)
+
+(use-package sideline-flycheck
+  :after sideline
+  :hook (flycheck-mode . sideline-flycheck-setup)
+  :config
+  (setq lsp-ui-sideline-show-diagnositcs nil)
+  (setq lsp-ui-sideline-enable nil))
 
 (use-package breadcrumb
   :custom
@@ -131,6 +139,10 @@
 (use-package yasnippet
   :config
   (yas-global-mode))
+(use-package consult-yasnippet
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>y" . consult-yasnippet)))
 (use-package yasnippet-snippets)
 
 (provide 'config-ide)

@@ -33,7 +33,11 @@
 
 (use-package evil-collection
   :after evil
-  :config (evil-collection-init))
+  :config (evil-collection-init)
+  :custom
+  (evil-collection-calendar-want-org-bindings t)
+  (evil-ccolletion-outline-bind-tap-p t)
+  )
 
 (use-package smartparens
   :after evil
@@ -68,6 +72,11 @@
               ("M-." . expreg-expand)
               ("M-S-." . expreg-contract)))
 
- (use-package vundo)
- 
+(use-package vundo)
+
+;; (use-package undo-tree
+;;   :config
+;;   (global-undo-tree-mode))
+
+
 (provide 'config-editing)

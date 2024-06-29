@@ -1,11 +1,23 @@
 ;;; config-lang.el -*- lexical-binding: t; -*-
 
 
+
+
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
 ;;; Python
 (use-package python
   :ensure nil
   :hook (python-mode . (lambda ()
-			 (lsp-deferred))))
+			             (lsp-deferred))))
+  :init
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+
 (use-package lsp-pyright
   :after (lsp python))
 
@@ -20,23 +32,24 @@
 	 ("\\.astro\\'" . web-mode)
 	 ("\\.astro\\'" . web-mode)
      ("\\.svelte\\'" . web-mode)
+     ("\\.cshtml\\'" . web-mode)
      ("\\.php\\'" . web-mode))
 
 
-  :hook (web-mode . (lambda ()
-		  (emmet-mode)
-		  (lsp-deferred))))
+  :hook
+  (web-mode . emmet-mode)
+  (web-mode . lsp-deferred))
 
 (use-package lsp-tailwindcss
   :after (lsp web-mode)
   :init (setq lsp-tailwindcss-add-on-mode t))
 
-;; (use-package prisma-mode
-;;   :elpaca (:type git :host github :repo "pimeys/emacs-prisma-mode")
-;;   :mode ("\\.prisma\\'" . prisma-mode))
+;; ;; (use-package prisma-mode
+;; ;;   :elpaca (:type git :host github :repo "pimeys/emacs-prisma-mode")
+;; ;;   :mode ("\\.prisma\\'" . prisma-mode))
 
 
-;;; Dart/Flutter
+;; ;;; Dart/Flutter
 (use-package dart-mode
   :mode ("\\.dart\\'" . dart-mode)
   :custom
@@ -56,7 +69,7 @@
   (dart-mode . (lambda () (indent-bars-mode nil))))
 
 
-(use-package flutter)
+;; (use-package flutter)
  
 
 
@@ -74,41 +87,38 @@
   :hook
   (templ-ts-mode . lsp-deferred)
   (templ-ts-mode . emmet-mode)
-  (templ-ts-mode . auto-rename-tag-mode))
+  (templ-ts-mode . auto-rename-tag-mode)
+  :init
+  (setq my/templ-tsauto-config
+        (make-treesit-auto-recipe
+        :lang 'templ
+        :ts-mode 'templ-ts-mode
+        :url "https://github.com/vrischmann/tree-sitter-templ"
+        :source-dir "src"
+        :revision "master"
+        :ext "\\.templ\\'"))
+    (add-to-list 'treesit-auto-recipe-list my/templ-tsauto-config))
 
-(use-package auto-rename-tag)
+(use-package auto-rename-tag
+  :hook
+  (web-mode . auto-rename-tag-mode)
+  (html-mode . auto-rename-tag-mode)
+  (xml-mode . auto-rename-tag-mode))
 
 (use-package go-ts-mode
   :ensure nil
   :mode ("\\.go\\'" . go-ts-mode)
   :hook
   (go-ts-mode . lsp-deferred)
+  :init
+  (add-to-list 'major-mode-remap-alist '(go-mode go-ts-mode))
   :custom (go-ts-mode-indent-offset 4))
 
-(setq treesit-language-source-alist
-   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-     (cmake "https://github.com/uyha/tree-sitter-cmake")
-     (css "https://github.com/tree-sitter/tree-sitter-css")
-     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-     (go "https://github.com/tree-sitter/tree-sitter-go")
-     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-     (html "https://github.com/tree-sitter/tree-sitter-html")
-     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-     (json "https://github.com/tree-sitter/tree-sitter-json")
-     (make "https://github.com/alemuller/tree-sitter-make")
-     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-     (python "https://github.com/tree-sitter/tree-sitter-python")
-     (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
-    (csharp "https://github.com/tree-sitter/csharp-tree-sitter")
-     ))
 
-(defun install-treesitter-grammars () (interactive) 
-       (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist)))
+(setq treesit-font-lock-level 4)
 
+(add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
+(add-to-list 'major-mode-remap-alist '(typescript-mode . typescript-ts-mode))
 
 (use-package dotenv-mode
   :mode (("\\.env\\'" . dotenv-mode)
@@ -120,5 +130,18 @@
 
 (use-package zig-mode
   :mode (("\\.zig\\'"  . zig-mode)))
+
+(use-package csharp-mode
+  :ensure nil
+  :hook (csharp-mode . lsp-deferred)
+  :mode (("\\.cs\\'" . csharp-ts-mode)))
+
+(use-package racket-mode)
+(use-package jsdoc)
+(use-package docstr
+  :config
+  (global-docstr-mode))
+
+
 
 (provide 'config-lang)

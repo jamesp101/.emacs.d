@@ -15,7 +15,6 @@
   :custom
   (nyan-animate-nyancat t)
   (nyan-wavy-trail t)
-  :after doom-modeline
   :hook
   (doom-modeline . nyan-mode))
 
@@ -52,5 +51,13 @@
 
 (use-package kaolin-themes)
 
+(use-package keypression)
 
 (provide 'config-ui)
+
+
+
+
+
+
+

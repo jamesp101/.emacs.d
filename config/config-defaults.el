@@ -46,8 +46,8 @@
 
 
   :config
-  (global-auto-revert-mode 1)
-  (pixel-scroll-precision-mode 1))
+  (global-auto-revert-mode)
+  (pixel-scroll-precision-mode))
 
 
 (use-package display-line-numbers
@@ -62,7 +62,9 @@
   (setq-default bidi-paragraph-direction 'left-to-right)
   (setq-default bidi-inhabit-bpa t)
   :config
-  (global-so-long-mode t))
+  (global-so-long-mode t)
+  :hook
+  (text-mode . auto-fill-mode))
 
 
 (use-package simple
@@ -90,8 +92,9 @@
   (setq eshell-directory-name
         (expand-file-name "eshell/" my/cache-directory)))
 
-(use-package desktop
-  :ensure nil
-  :config
-  (desktop-save-mode))
+;; (use-package desktop
+;;   :ensure nil
+;;   :config
+;;   (desktop-save-mode))
+
 (provide 'config-defaults)

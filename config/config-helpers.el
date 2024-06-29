@@ -29,19 +29,24 @@
   :config
   (dashboard-setup-startup-hook)
   :init
-  (setq dashboard-startup-banner (expand-file-name "icon.png" user-emacs-directory))
-  (setq dashboard-show-shortcuts t)
-  (setq dashboard-center-content t)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-items '((recents . 5 )
-			              (projects  . 5))))
+  (setq dashboard-startup-banner
+   (expand-file-name "icon.png" user-emacs-directory))
 
-(use-package dashboard-ls
-  :custom
-  (dashboard-items '((ls-directories . 5 )
-                     (ls-files . 5))))
+  (setq dashboard-show-shortcuts t)
+  (setq dashboard-items '((agenda   . 5)
+                     (recents . 5 )
+                     (projects  . 5)))
+  (setq dashboard-item-shortcuts '((agenda   . "a")
+                              (recents . "r")
+                              (projects  . "p")))
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-navigator t))
+
+;; (use-package dashboard-ls
+;;   :custom
+;;   (dashboard-items '((ls-directories . 5 )
+;;                      (ls-files . 5))))
 
 (use-package which-key
   :config
@@ -74,16 +79,16 @@
   (winner-mode))
 
 (use-package ace-window
-  :ensure nil
   :custom (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?k ?l ))
-  :bind (:map evil-normal-state-map
-              ("<SPC>oo" .  ace-window)
-              ("<SPC>os" .  ace-swap-window)
-              ("<SPC>oh" .  split-window-right)
-              ("<SPC>ov" .  split-window-below)
-              ("<SPC>od" .  ace-delete-window)
-              ("<SPC>or" .  ace-delete-window)
-              ("<SPC>oD" .  ace-delete-other-windows)))
+  :bind
+  (:map evil-normal-state-map
+            ("<SPC>wo" .  ace-window)
+            ("<SPC>ws" .  ace-swap-window)
+            ("<SPC>wh" .  split-window-right)
+            ("<SPC>wv" .  split-window-below)
+            ("<SPC>wd" .  ace-delete-window)
+            ("<SPC>wr" .  ace-delete-window)
+            ("<SPC>wD" .  ace-delete-other-windows)))
 
 (use-package resize-window
   :bind (:map evil-normal-state-map

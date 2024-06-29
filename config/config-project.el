@@ -27,7 +27,12 @@
 
   (:map treemacs-mode-map
         ("<SPC>pf" . consult-ripgrep)))
-  
+
+(use-package project-treemacs
+  :after (treemacs )
+  :config
+  (project-treemacs-mode)
+  (treemacs-project-follow-mode))
 
 (use-package treemacs-magit
   :after (treemacs magit))
@@ -35,8 +40,8 @@
 (use-package treemacs-evil
   :after (treemacs evil))
 
-(use-package treemacs-all-the-icons
-  :after (treemacs all-the-icons))
+(use-package treemacs-all-the-icons)
+(use-package treemacs-nerd-icons)
 
 
 (use-package eat
@@ -66,6 +71,18 @@
   :bind
   (:map evil-normal-state-map
         ("<SPC>pF" . color-rg-search-input)))
+
+
+(use-package diff-hl
+  :hook (find-file   . diff-hl-mode)
+  :hook (vc-dir-mode . diff-hl-dir-mode)
+  :hook (dired-mode  . diff-hl-dired-mode)
+  :config
+  (global-diff-hl-mode)
+  :custom
+  (vc-git-diff-switches '("--histogram"))
+  (diff-hl-side 'right)
+  (diff-hl-draw-borders nil))
 
 (provide 'config-project)
 
