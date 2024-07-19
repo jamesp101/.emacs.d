@@ -40,7 +40,8 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-
+(when (eq system-type 'windows-nt)
+  (elpaca-no-symlink-mode))
 (add-to-list 'load-path
 	         (expand-file-name "config/" user-emacs-directory))
 
