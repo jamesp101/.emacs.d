@@ -35,7 +35,7 @@
 
   (setq default-coding-system 'utf-8)
 
-  (setq visible-bell nil)
+  (setq visible-bell 'ignore)
 
   (setq delete-by-moving-to-trash t)
 
@@ -91,10 +91,5 @@
   :init
   (setq eshell-directory-name
         (expand-file-name "eshell/" my/cache-directory)))
-
-;; (use-package desktop
-;;   :ensure nil
-;;   :config
-;;   (desktop-save-mode))
 
 (provide 'config-defaults)
