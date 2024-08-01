@@ -3,13 +3,20 @@
   :init
   (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory))
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(flex)))
   :config
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("templ" "lsp"))
                     :activation-fn (lsp-activate-on "templ")
                     :server-id 'templ-ts-mode))
+  (set-face-attribute 'lsp-lens-face nil
+                      :box 1)
 
+  :hook
+  (lsp-completion-mode . my/lsp-mode-setup-completion)
   :custom
   (lsp-auto-guess-root t)
   (lsp-use-plists t)
@@ -20,6 +27,7 @@
   (lsp-signature-render-documentation t)
   (lsp-inlay-hint-enable t)
   (lsp-tcp-cconnection-timeout 0.01)
+  (lsp-completion-provider :none)
   :bind
   (:map evil-normal-state-map
         ("C-." . lsp-execute-code-action)
@@ -59,23 +67,19 @@
 
 
 
-
-
 (use-package lsp-ui
   :after lsp
-  :custom
-  (lsp-ui-doc-position 'at-point)
-  (lsp-ui-doc-enable t)
-  (lsp-ui-sideline-show-hover nil)
+  :init
+  (setq lsp-ui-sideline-show-diagnositcs nil)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-enable t)
   :hook
   (lsp-mode . lsp-ui-doc-mode)
   :bind
   (:map evil-normal-state-map
-        ("K" . lsp-ui-doc-toggle))
-  :config
-  (setq lsp-ui-sideline-show-diagnositcs nil)
-  (setq lsp-ui-sideline-enable nil)
-  )
+        ("K" . lsp-ui-doc-toggle)))
 
 (use-package sideline
   :hook
@@ -89,6 +93,7 @@
         sideline-format-left "%s   "                 ; format for left aligment
         sideline-format-right "   %s"                ; format for right aligment
         sideline-priority 100                        ; overlays' priority
+        sideline-lsp-code-actions-prefix "󰌵 "
         sideline-display-backend-name t
         sideline-backends-right '((sideline-lsp . up)
                                   (sideline-flycheck . down))))

@@ -1,9 +1,7 @@
 ;;; config-project -*- lexical-binding: t; -*-
 
-
 (use-package project
-  :ensure nil
-  :after evil)
+  :ensure nil)
 
 (use-package consult-project-extra
   :bind
@@ -44,11 +42,26 @@
 (use-package treemacs-nerd-icons)
 
 
-(use-package eat
-  :bind
-  (:map evil-normal-state-map
+
+(if (eq system-type 'windows-nt)
+  (use-package eat
+    :ensure (eat
+             :repo "https://codeberg.org/thearcticcat/emacs-eat"
+             :branch "windows-hack"
+             :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el")))
+    :bind
+    (:map evil-normal-state-map
+            ("<SPC>tp" . eat-project)
+            ("<SPC>to" . eat-project-other-window)))
+  (use-package eat
+    :bind
+    (:map evil-normal-state-map
         ("<SPC>tp" . eat-project)
-        ("<SPC>to" . eat-project-other-window)))
+        ("<SPC>to" . eat-project-other-window))))
 
 (use-package magit
   :bind
@@ -57,11 +70,12 @@
         ("<SPC>pg" . magit))
   :config
   (setq transient-history-file
-        (expand-file-name "magit-transient/" my/cache-directory)))
+        (expand-file-name "magit-transient" my/cache-directory)))
 
 (use-package git-modes)
 (use-package gitignore-snippets)
 (use-package gitignore-templates)
+
 
 
 (use-package color-rg

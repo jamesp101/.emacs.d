@@ -76,7 +76,7 @@
 (require 'config-ide)
 (require 'config-lang)
 (require 'config-project)
-(require 'config-org)
+;; (require 'config-org)
 
 
 (elpaca-wait)

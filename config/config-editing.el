@@ -6,11 +6,6 @@
   :config
   (evil-mode)
   (electric-pair-mode))
-  ;:bind (:map evil-normal-state-map
-  ;            ("<SPC>0" .  delete-window)
-  ;            ("<SPC>1" .  delete-other-windows)
-  ;            ("<SPC>2" .  split-window-below)
-  ;            ("<SPC>3" .  split-window-right)))
 
 (use-package hs-minor-mode
   :ensure nil
@@ -36,8 +31,7 @@
   :config (evil-collection-init)
   :custom
   (evil-collection-calendar-want-org-bindings t)
-  (evil-ccolletion-outline-bind-tap-p t)
-  )
+  (evil-collection-outline-bind-tap-p t))
 
 (use-package smartparens
   :after evil
@@ -74,9 +68,6 @@
 
 (use-package vundo)
 
-;; (use-package undo-tree
-;;   :config
-;;   (global-undo-tree-mode))
 
 
 (provide 'config-editing)

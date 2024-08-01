@@ -1,7 +1,8 @@
 ;;; 
 
 ;; (set-frame-font "Comic Mono 13")
-(set-frame-font "VictorMono Nerd Font  11")
+(set-frame-font "VictorMono NFM:spacing=100:size=13" )
+;; (set-fontset-font )
 (add-hook 'prog-mode-hook
           #'(lambda ()
               (setq display-line-numbers 'relative)))
@@ -23,6 +24,10 @@
 (setq lsp-ui-sideline-show-diagnositcs nil)
 (setq lsp-ui-sideline-enable nil)
 
+(when (eq system-type 'windows-nt)
+    (setq find-program "C:\\msys64\\usr\\bin\\find.exe"))
+
+(global-unset-key (kbd "C-z"))
 
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)

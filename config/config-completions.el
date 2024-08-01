@@ -35,28 +35,50 @@
   (setq completion-category-overrides '((file (styles . (partial-completion)))))
   (setq completion-category-defaults nil))
 
+(use-package corfu
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-quit-no-match 'separator)
+  (corfu-auto-delay 0)
+  (corfu-auto-prefix 1)
+
+  :init
+  (setq tab-always-indent 'complete)
+  (setq text-mode-ispell-word-cocmpletion nil)
+  (setq read-extended-command-prediccate #'command-completion-default-include-p)
+  :config
+  (global-corfu-mode)
+  :hook
+  (corfu-mode . corfu-popupinfo-mode)
+  )
+
+(use-package nerd-icons-corfu
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package all-the-icons-completion
   :config
   (all-the-icons-completion-marginalia-setup)
   (all-the-icons-completion-mode t))
 
-(use-package company
-  :custom
-  (company-minimum-prefix-length 0)
-  (company-tooltip-align-annotations t)
-  (company-idle-delay 0.1)
-  (company-tooltip-maximum-width 100)
-  (company-tooltip-minimum-width 100)
-  :config
-  (global-company-mode)
-  :bind
-  ("C-M-i" . company-complete))
+;; (use-package company
+;;   :custom
+;;   (company-minimum-prefix-length 0)
+;;   (company-tooltip-align-annotations t)
+;;   (company-idle-delay 0.1)
+;;   (company-tooltip-maximum-width 100)
+;;   (company-tooltip-minimum-width 100)
+;;   :config
+;;   (global-company-mode)
+;;   :bind
+;;   ("C-M-i" . company-complete))
 
 
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-
+;; (use-package company-posframe
+;;   :after company
+;;   :hook (company-mode . company-posframe-mode))
 
 
 (provide 'config-completions)

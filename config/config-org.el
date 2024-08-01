@@ -1,5 +1,6 @@
 ;;; config-org -*- lexical-binding: t; -*-
 (use-package org
+  :ensure nil
   :hook (org-mode . org-indent-mode)
   :custom
   (org-id-locations (expand-file-name ".org-id-locations" my/var-directory))
@@ -60,15 +61,15 @@
 
 
 
-(use-package org-roam
-  :custom
+;; (use-package org-roam
+;;   :custom
   
-  (org-roam-db-location (expand-file-name "org-roam.db" my/var-directory))
-  (org-roam-directory "~/org/roam/")
-  (org-roam-node-display-template
-   (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  :config
-  (org-roam-db-autosync-mode))
+;;   (org-roam-db-location (expand-file-name "org-roam.db" my/var-directory))
+;;   (org-roam-directory "~/org/roam/")
+;;   (org-roam-node-display-template
+;;    (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+;;   :config
+;;   (org-roam-db-autosync-mode))
 
 
 (use-package org-re-reveal

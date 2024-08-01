@@ -1,8 +1,5 @@
 ;;; config-lang.el -*- lexical-binding: t; -*-
 
-
-
-
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -52,18 +49,6 @@
 ;; ;;; Dart/Flutter
 (use-package dart-mode
   :mode ("\\.dart\\'" . dart-mode)
-  :custom
-  (lsp-dart-flutter-sdk-dir "~/.fvm/flutter_sdk")
-  (lsp-dart-sdk-dir "~/.fvm/flutter_sdk/bin/cache/dart-sdk/")
-  (lsp-dart-flutter-executable "flutter")
-
-  :init
-  (dap-register-debug-template "LINUX :: Custom Debug"
-                               (list :flutterPlatform "x86_64"
-                                     :program "lib/main.dart"
-                                     :args '()
-                                     :type ))
-  
   :hook
   (dart-mode . lsp-deferred)
   (dart-mode . (lambda () (indent-bars-mode nil))))
@@ -135,6 +120,10 @@
   :ensure nil
   :hook (csharp-mode . lsp-deferred)
   :mode (("\\.cs\\'" . csharp-ts-mode)))
+
+(use-package fsharp-mode
+  :hook (fsharp-mode . lsp-deferred)
+  :mode (("\\.fs" . fsharp-mode)))
 
 (use-package racket-mode)
 (use-package jsdoc)
