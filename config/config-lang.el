@@ -10,10 +10,9 @@
 ;;; Python
 (use-package python
   :ensure nil
-  :hook (python-mode . (lambda ()
-			             (lsp-deferred))))
+  :hook (python-mode . eglot)
   :init
-  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
 
 (use-package lsp-pyright
   :after (lsp python))
@@ -31,26 +30,15 @@
      ("\\.svelte\\'" . web-mode)
      ("\\.cshtml\\'" . web-mode)
      ("\\.php\\'" . web-mode))
-
-
   :hook
   (web-mode . emmet-mode)
-  (web-mode . lsp-deferred))
-
-(use-package lsp-tailwindcss
-  :after (lsp web-mode)
-  :init (setq lsp-tailwindcss-add-on-mode t))
-
-;; ;; (use-package prisma-mode
-;; ;;   :elpaca (:type git :host github :repo "pimeys/emacs-prisma-mode")
-;; ;;   :mode ("\\.prisma\\'" . prisma-mode))
+  )
 
 
 ;; ;;; Dart/Flutter
 (use-package dart-mode
   :mode ("\\.dart\\'" . dart-mode)
   :hook
-  (dart-mode . lsp-deferred)
   (dart-mode . (lambda () (indent-bars-mode nil))))
 
 
@@ -96,11 +84,9 @@
   :hook
   (go-ts-mode . lsp-deferred)
   :init
+  (setq treesit-font-lock-level 4)
   (add-to-list 'major-mode-remap-alist '(go-mode go-ts-mode))
   :custom (go-ts-mode-indent-offset 4))
-
-
-(setq treesit-font-lock-level 4)
 
 (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
 (add-to-list 'major-mode-remap-alist '(typescript-mode . typescript-ts-mode))
@@ -118,12 +104,21 @@
 
 (use-package csharp-mode
   :ensure nil
-  :hook (csharp-mode . lsp-deferred)
-  :mode (("\\.cs\\'" . csharp-ts-mode)))
+  :hook (csharp-mode . eglot)
+  :mode (("\\.cs\\'" . csharp-mode)))
 
 (use-package fsharp-mode
-  :hook (fsharp-mode . lsp-deferred)
-  :mode (("\\.fs" . fsharp-mode)))
+  :mode
+  (("\\.fs\\'" . fsharp-mode)
+   ("\\.fsi\\'" . fsharp-mode)
+   ("\\.fsx\\'" . fsharp-mode)))
+
+
+(use-package eglot-fsharp
+  :init
+  (setq eglot-fsharp-server-install-dir
+        (expand-file-name "fsharp-lsp/" my/cache-directory))
+  :after fsharp-mode)
 
 (use-package racket-mode)
 (use-package jsdoc)

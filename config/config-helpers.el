@@ -1,5 +1,11 @@
 ;;;
-(use-package helpful)
+(use-package helpful
+  :config
+  (global-set-key (kbd "C-h f") #'helpful-function)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-h x") #'helpful-command)
+  )
 
 
 (use-package consult
@@ -15,6 +21,7 @@
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  (indent-bars-width-frac 0.2)
   :hook (prog-mode . indent-bars-mode)
   :bind (:map evil-normal-state-map
               ("<SPC>oi" . indent-bars-mode)))
@@ -43,10 +50,6 @@
   (setq dashboard-center-content t)
   (setq dashboard-set-navigator t))
 
-;; (use-package dashboard-ls
-;;   :custom
-;;   (dashboard-items '((ls-directories . 5 )
-;;                      (ls-files . 5))))
 
 (use-package which-key
   :config

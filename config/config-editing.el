@@ -1,5 +1,7 @@
 ;;; config-editing -*- lexical-binding: t; -*-
 (use-package evil
+  :init
+  (setq evil-undo-system 'undo-fu)
   :custom
   (evil-want-integration t)
   (evil-want-keybinding nil)
@@ -37,6 +39,11 @@
   :after evil
   :hook (after-init . smartparens-global-mode))
 
+(use-package evil-goggles
+  :custom
+  (evil-goggles-duration 0.2)
+  :after evil
+  :config (evil-goggles-mode))
 
 (use-package origami
   :after evil
@@ -46,7 +53,10 @@
   :after evil
   :config
   (setq undo-limit 6710886400)
-  (setq evil-undo-system 'undo-fu))
+  (setq evil-undo-system 'undo-fu)
+  :bind
+  (:map evil-normal-state-map
+        ("C-r" . undo-fu-only-redo)))
 
 (use-package undo-fu-session
   :after undo-fu

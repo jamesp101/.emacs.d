@@ -13,9 +13,9 @@
 	      ("C-k" . vertico-previous)
 	      ("C-u" . vertico-directory-up)
           ("ESC" . vertico-exit)
-          ("C-<escape>" . vertico-suspend))
+          ("C-<backspace>" . vertico-suspend))
   (:map evil-normal-state-map 
-        ("C-<escape>" . vertico-suspend)))
+        ("C-<backspace>" . vertico-suspend)))
 
 
 (use-package marginalia
@@ -26,8 +26,6 @@
 
   :config
   (marginalia-mode))
-
-
 
 (use-package orderless
   :config
@@ -48,10 +46,9 @@
   (setq text-mode-ispell-word-cocmpletion nil)
   (setq read-extended-command-prediccate #'command-completion-default-include-p)
   :config
-  (global-corfu-mode)
   :hook
-  (corfu-mode . corfu-popupinfo-mode)
-  )
+  (prog-mode . corfu-mode)
+  (corfu-mode . corfu-popupinfo-mode))
 
 (use-package nerd-icons-corfu
   :after corfu
@@ -63,22 +60,19 @@
   (all-the-icons-completion-marginalia-setup)
   (all-the-icons-completion-mode t))
 
-;; (use-package company
-;;   :custom
-;;   (company-minimum-prefix-length 0)
-;;   (company-tooltip-align-annotations t)
-;;   (company-idle-delay 0.1)
-;;   (company-tooltip-maximum-width 100)
-;;   (company-tooltip-minimum-width 100)
-;;   :config
-;;   (global-company-mode)
-;;   :bind
-;;   ("C-M-i" . company-complete))
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
 
+(use-package tempel)
 
-;; (use-package company-posframe
-;;   :after company
-;;   :hook (company-mode . company-posframe-mode))
+(use-package eglot-tempel
+  :after eglot
+  :hook (eglot . eglot-tempel-mode))
+
 
 
 (provide 'config-completions)

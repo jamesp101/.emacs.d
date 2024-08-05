@@ -46,6 +46,7 @@
 
 
   :config
+  (global-hl-line-mode)
   (global-auto-revert-mode)
   (pixel-scroll-precision-mode))
 

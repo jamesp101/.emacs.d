@@ -1,7 +1,8 @@
-;;; 
+;;;
 
 ;; (set-frame-font "Comic Mono 13")
 (set-frame-font "VictorMono NFM:spacing=100:size=13" )
+(set-face-font 'eldoc-box-body "VictorMono NFM:spacing=100:size=13")
 ;; (set-fontset-font )
 (add-hook 'prog-mode-hook
           #'(lambda ()
@@ -9,7 +10,7 @@
 
 (treemacs-load-theme 'nerd-icons)
 (setq treemacs-position 'right)
-(setq-default line-spacing 4)
+(setq-default line-spacing 2)
 (consult-theme 'kaolin-dark)
 
 (defun calendar-insert-date ()
@@ -25,7 +26,21 @@
 (setq lsp-ui-sideline-enable nil)
 
 (when (eq system-type 'windows-nt)
-    (setq find-program "C:\\msys64\\usr\\bin\\find.exe"))
+  (setq find-program "C:\\msys64\\usr\\bin\\find.exe")
+  ;;Hide dos-eol
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table  ?\^M []))
+
+
+(defun remove-dos-eol ()
+  "Hides ^M"
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table  ?\^M []))
+
+
+(setq org-agenda-files '("C:/ORG/AGENDA"))
+(setq org-excalidraw-directory "C:/ORG/EXCALIDRAW")
 
 (global-unset-key (kbd "C-z"))
 

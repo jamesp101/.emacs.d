@@ -1,7 +1,24 @@
 ;;; config-project -*- lexical-binding: t; -*-
 
 (use-package project
+  :ensure nil
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>pr" . project-remember-projects-under))
+        ("<SPC>pd" . project-forget-project)
+  )
+
+(use-package compile
   :ensure nil)
+
+(use-package fancy-compilation
+  :commands (fancy-compilation-mode)
+  :after compile
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>pc" . project-compile)))
+
+
 
 (use-package consult-project-extra
   :bind
@@ -31,6 +48,8 @@
   :config
   (project-treemacs-mode)
   (treemacs-project-follow-mode))
+
+(use-package consult-eglot)
 
 (use-package treemacs-magit
   :after (treemacs magit))
