@@ -31,9 +31,11 @@
   (setq indent-line-function 'insert-tab)
 
   (setq buffer-auto-save-file-name
-        (expand-file-name ".cache/auto-save/" user-emacs-directory))
+        (expand-file-name ".vars/auto-save" user-emacs-directory))
 
+  (set-language-environment "UTF-8")
   (setq default-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8-unix)
 
   (setq visible-bell 'ignore)
 
@@ -68,12 +70,6 @@
   (text-mode . auto-fill-mode))
 
 
-(use-package simple
-  :ensure nil
-  :init
-  (add-hook 'prog-mode-hook #'(lambda () (toggle-truncate-lines nil)))
-  (add-hook 'fundamental-mode-hook #'(lambda () (toggle-truncate-lines t))))
-
 (use-package recentf
   :ensure nil
   :custom
@@ -82,15 +78,22 @@
   (after-init . recentf-mode))
   
 
-(use-package special-mode
-  :ensure nil
-  :after solaire-mode
-  :hook (special-mode . solaire-mode))
-
 (use-package eshell
   :ensure nil
-  :init
+  :commands (eshell)
+  :custom
   (setq eshell-directory-name
         (expand-file-name "eshell/" my/cache-directory)))
+
+(add-hook 'prog-mode-hook #'(lambda () (setq-local truncate-lines nil)))
+(add-hook 'fundamental-mode-hook #'(lambda () (setq-local truncate-lines t)))
+
+
+(use-package dired
+  :ensure nil)
+
+(use-package nerd-icons-dired
+  :after (dired)
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 (provide 'config-defaults)

@@ -1,10 +1,14 @@
 ;;; config-ui -*- lexical-binding: t; -*-
 
 
-(use-package modus-themes)
-(use-package doom-themes)
+(use-package modus-themes
+  :defer t)
 
-(use-package catppuccin-theme)
+(use-package doom-themes
+  :defer t)
+
+(use-package catppuccin-theme
+  :defer t)
 
 (use-package doom-modeline
   :config
@@ -19,8 +23,6 @@
   (doom-modeline . nyan-mode))
 
 
-(use-package nano-modeline)
-
 
 (use-package all-the-icons)
 
@@ -29,21 +31,25 @@
   ((fundamental-mode . rainbow-delimiters-mode)
    (prog-mode        . rainbow-delimiters-mode)))
 
-(use-package solaire-mode)
+(use-package solaire-mode
+  :commands (solaire-mode)
+  :hook (special-mode . solaire-mode))
 
 (use-package focus
   :bind (:map evil-normal-state-map
               ("<SPC>of" . focus-mode)))
 
 
-(use-package lsp-focus
-  :after (lsp focus)
-  :hook (focus-mode  . lsp-focus-mode))
-
-
 (use-package pulsar
-  :config
-  (pulsar-global-mode))
+  :commands
+  (pulsar-pulse-line-red
+   pulsar-pulse-line-yellow
+   pulsar-pulse-line
+   )
+  :hook
+  (minibuffer-setup . pulsar-pulse-line)
+  (consult-after-jump . pulsar-pulse-line)
+  )
 
 
 (use-package vi-tilde-fringe
@@ -51,6 +57,8 @@
 
 (use-package kaolin-themes)
 
-(use-package keypression)
+(use-package keypression
+  :defer t)
+
 
 (provide 'config-ui)

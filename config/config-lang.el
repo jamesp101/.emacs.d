@@ -18,7 +18,8 @@
   :after (lsp python))
 
 
-(use-package emmet-mode)
+(use-package emmet-mode
+  :commands (emmet-mode))
 
 ;;; Web Mode
 (use-package web-mode
@@ -45,15 +46,12 @@
 ;; (use-package flutter)
  
 
-
-(use-package lsp-dart
-  :after (lsp dart-mode))
-
 ;;; GdScript-mode
 (use-package gdscript-mode
-  :hook (gdscript-ts-mode . (lsp-deferred)))
+  :hook (gdscript-ts-mode . eglot))
 
-(use-package nix-mode)
+(use-package nix-ts-mode
+  :mode ("\\.nix\\'" . nix-ts-mode))
 
 (use-package templ-ts-mode
   :mode ("\\.templ\\'" . templ-ts-mode)
@@ -93,7 +91,8 @@
 
 (use-package dotenv-mode
   :mode (("\\.env\\'" . dotenv-mode)
-     ("\\.env\\.local\\'" . dotenv-mode)))
+         ("\\.env\\.local\\'" . dotenv-mode)))
+
 (use-package yaml-ts-mode
   :ensure nil
   :mode (("\\.yaml\\'" . yaml-ts-mode)
@@ -104,7 +103,6 @@
 
 (use-package csharp-mode
   :ensure nil
-  :hook (csharp-mode . eglot)
   :mode (("\\.cs\\'" . csharp-mode)))
 
 (use-package fsharp-mode
@@ -120,11 +118,26 @@
         (expand-file-name "fsharp-lsp/" my/cache-directory))
   :after fsharp-mode)
 
-(use-package racket-mode)
-(use-package jsdoc)
+(use-package racket-mode
+  :mode
+  (("\\.rkt\\'" . racket-mode)))
+
 (use-package docstr
-  :config
-  (global-docstr-mode))
+  :commands (docstr-mode)
+  :hook (prog-mode . docstr-mode))
+
+(setq treesit-language-source-alist
+      '((csharp . ("https://github.com/tree-sitter/tree-sitter-c-sharp"))))
+
+
+(defun my/install-treesitter-languages ()
+  "install treesitter languages"
+  (interactive)
+  (let ((languages (mapcar 'car treesit-language-source-alist)))
+    (dolist (lang languages)
+      (treesit-install-language-grammar lang)
+      (message "`%s' parser was installed. " lang)
+      (sit-for 0.75))))
 
 
 

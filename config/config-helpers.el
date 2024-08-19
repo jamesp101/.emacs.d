@@ -1,11 +1,11 @@
 ;;;
 (use-package helpful
+  :defer t
   :config
   (global-set-key (kbd "C-h f") #'helpful-function)
   (global-set-key (kbd "C-h v") #'helpful-variable)
   (global-set-key (kbd "C-h k") #'helpful-key)
-  (global-set-key (kbd "C-h x") #'helpful-command)
-  )
+  (global-set-key (kbd "C-h x") #'helpful-command))
 
 
 (use-package consult
@@ -52,6 +52,7 @@
 
 
 (use-package which-key
+  :commands (which-key-mode)
   :config
   (which-key-mode))
 
@@ -67,8 +68,10 @@
            :host github
            :repo "tarsius/hl-todo")
 
-  :config
-  (global-hl-todo-mode))
+  :hook
+  (prog-mode . hl-todo-mode)
+  :defer t)
+
 
 
 (use-package avy
@@ -78,6 +81,11 @@
 
 (use-package winner
   :ensure nil
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>wr" . winner-redo)
+        ("<SPC>wu" . winner-undo))
+ 
   :config
   (winner-mode))
 

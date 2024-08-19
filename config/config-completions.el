@@ -40,6 +40,7 @@
   (corfu-quit-no-match 'separator)
   (corfu-auto-delay 0)
   (corfu-auto-prefix 1)
+  (corfu-min-width 50)
 
   :init
   (setq tab-always-indent 'complete)
@@ -56,9 +57,10 @@
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package all-the-icons-completion
+  :after (marginalia all-the-icons)
   :config
   (all-the-icons-completion-marginalia-setup)
-  (all-the-icons-completion-mode t))
+  (all-the-icons-completion-mode))
 
 (use-package cape
   :init

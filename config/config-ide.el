@@ -1,12 +1,34 @@
 ;;; config-ide.el -*- lexical-binding: t; -*-
+(defun delete-carrage-returns ()
+  "Remove ^M in buffer"
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (while (search-forward "\r" nil :noerror)
+      (replace-match ""))))
+
+(defun +eglot-code-actions ()
+    (interactive)
+    (call-interactively 'eglot-code-actions)
+    (delete-carrage-returns))
+
+(defun +eglot-format-buffer ()
+    (interactive)
+    (call-interactively 'eglot-format-buffer)
+    (delete-carrage-returns))
+
+
 (use-package eglot
+  :config
+  (custom-set-faces '(eglot-type-hint-face
+                      ((t (:box (:line-width 2 :color "#323232")
+                                :height 0.8)))))
   :bind
   (:map evil-normal-state-map
-        ("<SPC>f" . eglot-format-buffer)
-        ("C-." . eglot-code-actions)
-        ("<SPC>lr" . eglot-rename)
-
-        ))
+        ("<SPC>f" . +eglot-format-buffer)
+        ("C-." . +eglot-code-actions)
+        ("<SPC>lr" . eglot-rename)))
+  
 
 
 (use-package sideline
@@ -28,13 +50,14 @@
   (add-to-list 'sideline-backends-right 'sideline-flymake))
 
 (use-package sideline-eglot
-  :ensure (sideline-eglot :host github :repo "emacs-sideline/sideline-eglot")
   :after sideline
+  :ensure (sideline-eglot :host github :repo "emacs-sideline/sideline-eglot")
   :config
   (setq sideline-eglot-code-actions-prefix "󰌵 ")
   (add-to-list 'sideline-backends-right 'sideline-eglot))
 
 (use-package sideline-eldoc
+  :after sideline
   :ensure (sideline-eldoc :host github :repo "ginqi7/sideline-eldoc"))
 
 (use-package breadcrumb
@@ -93,13 +116,16 @@
 
 
 (use-package dap-mode
+  :defer t
   :custom
   (dap-breakpoints-file (expand-file-name ".dap-breakpoints/" my/cache-directory)))
 
 
 (use-package yasnippet
+  :defer t
   :config
   (yas-global-mode))
+
 (use-package consult-yasnippet
   :bind
   (:map evil-normal-state-map

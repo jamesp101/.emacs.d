@@ -47,23 +47,27 @@
 
 
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 100 1024 1024)
-                  gc-cons-percentage 0.1))
-          (setq file-name-handler-alist config/file-name-handler)
-          (setq read-process-output-max (* 1024 1024)))
+(setq enable-recursive-minibuffers t)
 
+(setq switch-to-buffer-obey-display-actions t)
+(setq show-paren-delay 0.1
+      show-paren-highlight-openparen t
+      show-paren-when-point-inside-paren t
+      show-paren-when-point-in-periphery t)
 
-(add-hook 'minibuffer-setup-hook #'(lambda ()
+(add-hook 'minibuffer-setup-hook (lambda ()
                                      (setq gc-cons-threshold most-positive-fixnum)))
+(add-hook 'minibuffer-exit-hook (lambda ()
+                                     (setq gc-cons-threshold (* 16 1024 1024))))
 
-(add-hook 'minibuffer-setup-hook #'(lambda ()
+(setq-default fill-column 80)
 
-                                     (setq gc-cons-threshold 167777216)))
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
-  (setq elpaca-use-package-by-default t))
+  (setq elpaca-use-package-by-default t)
+  (setq use-package-verbose t))
+
+(setq package-install-upgrade-built-in t)
 
 (elpaca-wait)
 

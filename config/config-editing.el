@@ -25,6 +25,7 @@
 
 (use-package evil-surround
   :after evil
+  :commands (global-evil-surround-mode)
   :config (global-evil-surround-mode))
 
 
@@ -51,9 +52,9 @@
 
 (use-package undo-fu
   :after evil
-  :config
-  (setq undo-limit 6710886400)
-  (setq evil-undo-system 'undo-fu)
+  :custom
+  (undo-limit 6710886400)
+  (evil-undo-system 'undo-fu)
   :bind
   (:map evil-normal-state-map
         ("C-r" . undo-fu-only-redo)))
@@ -76,7 +77,8 @@
               ("M-." . expreg-expand)
               ("M-S-." . expreg-contract)))
 
-(use-package vundo)
+(use-package vundo
+  :commands (vundo))
 
 
 

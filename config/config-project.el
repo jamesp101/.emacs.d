@@ -5,15 +5,10 @@
   :bind
   (:map evil-normal-state-map
         ("<SPC>pr" . project-remember-projects-under))
-        ("<SPC>pd" . project-forget-project)
-  )
+        ("<SPC>pd" . project-forget-project))
 
 (use-package compile
-  :ensure nil)
-
-(use-package fancy-compilation
-  :commands (fancy-compilation-mode)
-  :after compile
+  :ensure nil
   :bind
   (:map evil-normal-state-map
         ("<SPC>pc" . project-compile)))
@@ -29,12 +24,12 @@
   :after project)
 
 (use-package treemacs
+  :commands (treemacs treemacs-load-theme)
   :custom
   (treemacs-persist-file
    (expand-file-name "treemacs-persist" my/var-directory))
   (treemacs-last-error-persist-file
    (expand-file-name "treemacs-persist-error" my/var-directory))
-
   :bind
   (:map evil-normal-state-map
         ("<SPC>t t" . treemacs)
@@ -44,21 +39,26 @@
         ("<SPC>pf" . consult-ripgrep)))
 
 (use-package project-treemacs
-  :after (treemacs )
+  :after (treemacs)
   :config
   (project-treemacs-mode)
   (treemacs-project-follow-mode))
 
-(use-package consult-eglot)
+(use-package consult-eglot
+  :defer t)
 
 (use-package treemacs-magit
   :after (treemacs magit))
 
 (use-package treemacs-evil
-  :after (treemacs evil))
+  :after (treemacs evil)
+  )
 
-(use-package treemacs-all-the-icons)
-(use-package treemacs-nerd-icons)
+(use-package treemacs-all-the-icons
+  :defer t
+  )
+(use-package treemacs-nerd-icons
+  :after treemacs)
 
 
 
@@ -91,9 +91,14 @@
   (setq transient-history-file
         (expand-file-name "magit-transient" my/cache-directory)))
 
-(use-package git-modes)
-(use-package gitignore-snippets)
-(use-package gitignore-templates)
+(use-package git-modes
+  :mode (("\\.gitignore\\'" . gitignore-mode)))
+
+(use-package gitignore-snippets
+  :defer t)
+
+(use-package gitignore-templates
+  :commands (gitignore-templates-insert gitignore-templates-new-file))
 
 
 
