@@ -86,10 +86,7 @@
   :bind
   (:map evil-normal-state-map
         ("<SPC>gg" . magit)
-        ("<SPC>pg" . magit))
-  :config
-  (setq transient-history-file
-        (expand-file-name "magit-transient" my/cache-directory)))
+        ("<SPC>pg" . magit)))
 
 (use-package git-modes
   :mode (("\\.gitignore\\'" . gitignore-mode)))

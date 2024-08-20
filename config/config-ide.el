@@ -116,9 +116,7 @@
 
 
 (use-package dap-mode
-  :defer t
-  :custom
-  (dap-breakpoints-file (expand-file-name ".dap-breakpoints/" my/cache-directory)))
+  :defer t)
 
 
 (use-package yasnippet

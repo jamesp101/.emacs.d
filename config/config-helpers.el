@@ -1,11 +1,12 @@
 ;;;
 (use-package helpful
   :defer t
-  :config
-  (global-set-key (kbd "C-h f") #'helpful-function)
-  (global-set-key (kbd "C-h v") #'helpful-variable)
-  (global-set-key (kbd "C-h k") #'helpful-key)
-  (global-set-key (kbd "C-h x") #'helpful-command))
+  :bind
+  ("C-h f" . helpful-function)
+  ("C-h f" . helpful-function)
+  ("C-h v" . helpful-variable)
+  ("C-h k" . helpful-key)
+  ("C-h x" . helpful-command))
 
 
 (use-package consult
@@ -26,11 +27,7 @@
   :bind (:map evil-normal-state-map
               ("<SPC>oi" . indent-bars-mode)))
 
-(use-package transient
-  :init
-  (setq transient-history-file (expand-file-name "history.el" my/cache-directory  )
-        transient-levels-file (expand-file-name "levels.el"   my/cache-directory )
-        transient-values-file (expand-file-name "values.el"   my/cache-directory )))
+(use-package transient)
 
 (use-package dashboard
   :config
@@ -56,11 +53,6 @@
   :config
   (which-key-mode))
 
-(use-package harpoon
-  :bind
-  (:map evil-normal-state-map
-        ("<SPC>." . harpoon-find-file))
-  :custom (harpoon-cache-file (expand-file-name "harpoon/" my/cache-directory)))
 
 
 (use-package hl-todo

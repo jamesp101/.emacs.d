@@ -39,10 +39,10 @@
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-=") 'text-scale-set)
 
-(setq display-buffer-alist
-      '(
-        ("\\*inferior-fsharp\\*"
-         (display-buffer-use-some-window)
-         )
-        ))
+;; (setq display-buffer-alist
+;;       '(
+;;         ("\\*inferior-fsharp\\*"
+;;          (display-buffer-use-some-window)
+;;          )
+;;         ))
 (provide 'config)

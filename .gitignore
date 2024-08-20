@@ -63,3 +63,6 @@ projects
 org-roam.db
 
 /org-persist
+
+.var/
+.etc/

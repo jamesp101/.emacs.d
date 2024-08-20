@@ -63,8 +63,6 @@
   :after undo-fu
   :init
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (setq undo-fu-session-directory
-	(expand-file-name "undo-fu-session/" my/cache-directory))
   :config
   (undo-fu-session-global-mode))
 

@@ -27,6 +27,7 @@
 (use-package all-the-icons)
 
 (use-package rainbow-delimiters
+  :custom (rainbow-delimiters-max-face-count 5)
   :hook
   ((fundamental-mode . rainbow-delimiters-mode)
    (prog-mode        . rainbow-delimiters-mode)))

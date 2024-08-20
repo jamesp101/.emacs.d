@@ -1,7 +1,7 @@
-;;; init.el -*- lexical binding: t; -*-
+;;;init.el --- Init -*- no-byte-compile: t; lexical-binding: t; -*-
 
 (defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" my/cache-directory))
+(defvar elpaca-directory (expand-file-name "elpaca/" my/var-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 
@@ -40,34 +40,26 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
+;;; Elpaca for windows
 (when (eq system-type 'windows-nt)
   (elpaca-no-symlink-mode))
-(add-to-list 'load-path
-	         (expand-file-name "config/" user-emacs-directory))
 
-
-
-(setq enable-recursive-minibuffers t)
-
-(setq switch-to-buffer-obey-display-actions t)
-(setq show-paren-delay 0.1
-      show-paren-highlight-openparen t
-      show-paren-when-point-inside-paren t
-      show-paren-when-point-in-periphery t)
-
-(add-hook 'minibuffer-setup-hook (lambda ()
-                                     (setq gc-cons-threshold most-positive-fixnum)))
-(add-hook 'minibuffer-exit-hook (lambda ()
-                                     (setq gc-cons-threshold (* 16 1024 1024))))
-
-(setq-default fill-column 80)
 
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
   (setq elpaca-use-package-by-default t)
   (setq use-package-verbose t))
 
-(setq package-install-upgrade-built-in t)
+
+(use-package no-littering
+  :init
+  (setq no-littering-etc-directory my/etc-directory
+        no-littering-var-directory my/var-directory))
+
+
+(add-to-list 'load-path
+	         (expand-file-name "config/" user-emacs-directory))
+
 
 (elpaca-wait)
 

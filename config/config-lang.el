@@ -115,7 +115,7 @@
 (use-package eglot-fsharp
   :init
   (setq eglot-fsharp-server-install-dir
-        (expand-file-name "fsharp-lsp/" my/cache-directory))
+        (expand-file-name "fsharp-lsp/" my/var-directory))
   :after fsharp-mode)
 
 (use-package racket-mode
