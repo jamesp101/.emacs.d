@@ -11,9 +11,8 @@
   :defer t)
 
 (use-package doom-modeline
-  :config
-  (display-battery-mode)
-  (doom-modeline-mode))
+  :hook
+  (after-init . doom-modeline-mode))
 
 (use-package nyan-mode
   :custom
@@ -24,7 +23,6 @@
 
 
 
-(use-package all-the-icons)
 
 (use-package rainbow-delimiters
   :custom (rainbow-delimiters-max-face-count 5)
@@ -34,7 +32,10 @@
 
 (use-package solaire-mode
   :commands (solaire-mode)
-  :hook (special-mode . solaire-mode))
+
+  :hook
+  (messages-buffer-mode . solaire-mode)
+  (special-mode . solaire-mode))
 
 (use-package focus
   :bind (:map evil-normal-state-map
@@ -45,12 +46,10 @@
   :commands
   (pulsar-pulse-line-red
    pulsar-pulse-line-yellow
-   pulsar-pulse-line
-   )
+   pulsar-pulse-line)
   :hook
   (minibuffer-setup . pulsar-pulse-line)
-  (consult-after-jump . pulsar-pulse-line)
-  )
+  (consult-after-jump . pulsar-pulse-line))
 
 
 (use-package vi-tilde-fringe

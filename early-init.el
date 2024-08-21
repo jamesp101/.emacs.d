@@ -9,6 +9,7 @@
   (expand-file-name ".var/" user-emacs-directory))
 
 (defvar my/gc-cons-threshold (* 16 1024 1024))
+(defvar my/mode-line-format mode-line-format)
 
 
 ;;; Delay GC
@@ -17,6 +18,8 @@
           (lambda ()
             (setq gc-cons-threshold my/gc-cons-threshold)))
 
+;;; Avoid flashbang
+(load-theme 'wombat)
 ;;; Performance
 (setq load-prefer-newer t)
 (setq read-process-output-max (* 512 1024))
@@ -36,7 +39,6 @@
 
 (setq idle-update-delay 1.0)
 (setq which-func-update-delay 1.0)
-
 
 (unless (daemonp)
   (let ((old-value (default-toplevel-value 'file-name-handler-alist)))
@@ -87,7 +89,7 @@
               (minimal-emacs--reset-inhibited-vars-h))
             (unless (default-toplevel-value 'mode-line-format)
               (setq-default mode-line-format
-                            minimal-emacs--default-mode-line-format)))))
+                            my/mode-line-format)))))
 
       (advice-add 'startup--load-user-init-file :around
                   #'minimal-emacs--startup-load-user-init-file))
@@ -124,7 +126,11 @@
     ;; Shave seconds off startup time by starting the scratch buffer in
     ;; `fundamental-mode'
     (setq initial-major-mode 'fundamental-mode
-          initial-scratch-message nil)))
+          initial-scratch-message nil)
+
+    (unless (memq initial-window-system '(x pgtk))
+      (setq command-line-x-option-alist nil))))
+
 
 
 (when (featurep 'native-compile)
@@ -174,9 +180,7 @@
   (advice-add #'yes-or-no-p :override #'y-or-n-p))
 (defalias #'view-hello-file #'ignore)  ; Never show the hello file
 
-(load-theme 'wombat)
 
 (provide 'early-init)
 
-;;; Avoid flashbang
 ;;; early-init.el ends here

@@ -60,8 +60,7 @@
 (add-to-list 'load-path
 	         (expand-file-name "config/" user-emacs-directory))
 
-
-(elpaca-wait)
+(add-to-list 'load-path 'user-emacs-directory)
 
 
 (require 'config-defaults)
@@ -74,7 +73,8 @@
 (require 'config-project)
 (require 'config-org)
 
-
 (elpaca-wait)
+
 (load-file
  (expand-file-name "config.el" user-emacs-directory))
+

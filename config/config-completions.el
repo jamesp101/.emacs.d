@@ -17,8 +17,14 @@
   (:map evil-normal-state-map 
         ("C-<backspace>" . vertico-suspend)))
 
+(use-package eglot-booster
+  :ensure (eglot-booster :type "git" :host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
+
 
 (use-package marginalia
+  :after vertico
   :custom
   (marginalia-annotattors
    '(marginalia-annotators-heavy marginalia-annotators-light nil))
@@ -46,21 +52,25 @@
   (setq tab-always-indent 'complete)
   (setq text-mode-ispell-word-cocmpletion nil)
   (setq read-extended-command-prediccate #'command-completion-default-include-p)
-  :config
+
   :hook
   (prog-mode . corfu-mode)
   (corfu-mode . corfu-popupinfo-mode))
+
+
+
 
 (use-package nerd-icons-corfu
   :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(use-package all-the-icons-completion
-  :after (marginalia all-the-icons)
+(use-package nerd-icons-completion
+  :after marginalia
   :config
-  (all-the-icons-completion-marginalia-setup)
-  (all-the-icons-completion-mode))
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
 
 (use-package cape
   :init

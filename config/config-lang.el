@@ -32,8 +32,13 @@
      ("\\.cshtml\\'" . web-mode)
      ("\\.php\\'" . web-mode))
   :hook
-  (web-mode . emmet-mode)
-  )
+  (web-mode . emmet-mode))
+
+
+(use-package auto-close-block
+  :ensure (auto-close-block :type git :host github :repo "emacs-vs/auto-close-block")
+  :hook
+  (web-mode . auto-close-block-mode))
 
 
 ;; ;;; Dart/Flutter

@@ -38,17 +38,11 @@
 
 (use-package smartparens
   :after evil
-  :hook (after-init . smartparens-global-mode))
-
-(use-package evil-goggles
-  :custom
-  (evil-goggles-duration 0.2)
-  :after evil
-  :config (evil-goggles-mode))
+  :hook (prog-mode . smartparens-global-mode))
 
 (use-package origami
   :after evil
-  :hook (after-init . global-origami-mode))
+  :hook (evil-mode . global-origami-mode))
 
 (use-package undo-fu
   :after evil

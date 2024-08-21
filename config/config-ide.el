@@ -7,6 +7,7 @@
     (while (search-forward "\r" nil :noerror)
       (replace-match ""))))
 
+
 (defun +eglot-code-actions ()
     (interactive)
     (call-interactively 'eglot-code-actions)
@@ -120,9 +121,13 @@
 
 
 (use-package yasnippet
-  :defer t
-  :config
-  (yas-global-mode))
+  :hook
+  (prog-mode . yas-minor-mode))
+
+(use-package yasnippet-capf
+  :after cape
+  :init (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+
 
 (use-package consult-yasnippet
   :bind
@@ -135,6 +140,12 @@
 (use-package format-all)
 
 (use-package eldoc-box)
+
+(use-package ts-fold
+  :ensure (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold"))
+(use-package ts-docstr 
+  :ensure (ts-docstr :type git :host github :repo "emacs-vs/ts-docstr"
+                       :files (:defaults "langs/*.el")))
 
 (provide 'config-ide)
 ;;; config-ide.el ends here

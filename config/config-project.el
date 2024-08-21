@@ -51,14 +51,11 @@
   :after (treemacs magit))
 
 (use-package treemacs-evil
-  :after (treemacs evil)
-  )
+  :after (treemacs evil))
 
-(use-package treemacs-all-the-icons
-  :defer t
-  )
 (use-package treemacs-nerd-icons
-  :after treemacs)
+  :after treemacs
+  :config (treemacs-load-theme 'nerd-icons))
 
 
 
@@ -97,8 +94,6 @@
 (use-package gitignore-templates
   :commands (gitignore-templates-insert gitignore-templates-new-file))
 
-
-
 (use-package color-rg
   :ensure (color-rg
            :host github
@@ -120,4 +115,3 @@
   (diff-hl-draw-borders nil))
 
 (provide 'config-project)
-
