@@ -64,12 +64,14 @@
           display-buffer-in-side-window)
             (side . right)
             (slot . -1)
-            (window-width . 20))
+            (window-width . 10))
 
         ("\\*helpful.*\\*"
-            (display-buffer-in-atom-window)
+            (display-buffer-reuse-window)
             (side . right)
             (slot . 2)
             (window-width . 80))
         ))
+
+
 (provide 'config)

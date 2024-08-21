@@ -24,13 +24,13 @@
 ;;; Web Mode
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
-	 ("\\.jsx\\'" . web-mode)
-	 ("\\.tsx\\'" . web-mode)
-	 ("\\.astro\\'" . web-mode)
-	 ("\\.astro\\'" . web-mode)
-     ("\\.svelte\\'" . web-mode)
-     ("\\.cshtml\\'" . web-mode)
-     ("\\.php\\'" . web-mode))
+	     ("\\.jsx\\'" . web-mode)
+	     ("\\.tsx\\'" . web-mode)
+	     ("\\.astro\\'" . web-mode)
+	     ("\\.astro\\'" . web-mode)
+         ("\\.svelte\\'" . web-mode)
+         ("\\.cshtml\\'" . web-mode)
+         ("\\.php\\'" . web-mode))
   :hook
   (web-mode . emmet-mode))
 
@@ -49,7 +49,7 @@
 
 
 ;; (use-package flutter)
- 
+
 
 ;;; GdScript-mode
 (use-package gdscript-mode
@@ -67,13 +67,13 @@
   :init
   (setq my/templ-tsauto-config
         (make-treesit-auto-recipe
-        :lang 'templ
-        :ts-mode 'templ-ts-mode
-        :url "https://github.com/vrischmann/tree-sitter-templ"
-        :source-dir "src"
-        :revision "master"
-        :ext "\\.templ\\'"))
-    (add-to-list 'treesit-auto-recipe-list my/templ-tsauto-config))
+         :lang 'templ
+         :ts-mode 'templ-ts-mode
+         :url "https://github.com/vrischmann/tree-sitter-templ"
+         :source-dir "src"
+         :revision "master"
+         :ext "\\.templ\\'"))
+  (add-to-list 'treesit-auto-recipe-list my/templ-tsauto-config))
 
 (use-package auto-rename-tag
   :hook
@@ -111,6 +111,35 @@
   :mode (("\\.cs\\'" . csharp-mode)))
 
 (use-package fsharp-mode
+  :config
+  ;;; Indent fix
+  (defun fsharp--compute-indentation-open-bracket (open-bracket-pos)
+    "Computes indentation for a line within an open bracket expression."
+    (save-excursion
+      (let ((startpos (point))
+            placeholder)
+        (goto-char (1+ open-bracket-pos)) ; just beyond bracket
+        (skip-chars-forward " \t")
+        (if (and (null (memq (following-char) '(?\n ?# ?\\)))
+                 (not fsharp-conservative-indentation-after-bracket))
+            (current-column)
+          (forward-line 1)
+          (while (and (< (point) startpos)
+                      (looking-at "[ \t]*\\(//\\|[\n\\\\]\\)")) ; skip noise
+            (forward-line 1))
+          (if (and (< (point) startpos)
+                   (/= startpos
+                       (save-excursion
+                         (goto-char (1+ open-bracket-pos))
+                         (forward-comment (point-max))
+                         (point))))
+              (current-indentation)
+            (goto-char open-bracket-pos)
+            (setq placeholder (point))
+            (fsharp-goto-beginning-of-tqs
+             (save-excursion (nth 3 (parse-partial-sexp
+                                     placeholder (point)))))
+            (+ (current-indentation) fsharp-indent-offset))))))
   :mode
   (("\\.fs\\'" . fsharp-mode)
    ("\\.fsi\\'" . fsharp-mode)
