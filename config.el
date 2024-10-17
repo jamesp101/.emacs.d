@@ -1,6 +1,6 @@
 ;;;
 
-(set-frame-font "VictorMono NFM:spacing=100:size=13" )
+(set-frame-font "Comic Mono:spacing=110:size=13" )
 (set-face-font 'eldoc-box-body "VictorMono NFM:spacing=100:size=13")
 
 (add-hook 'prog-mode-hook
@@ -12,7 +12,7 @@
 
 (setq treemacs-position 'right)
 
-(setq-default line-spacing 1)
+(setq-default line-spacing 2)
 (load-theme 'kaolin-dark t)
 
 (when (eq system-type 'windows-nt)
@@ -53,7 +53,7 @@
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-=") 'text-scale-set)
 
-(setq display-buffer-alist
+(add-to-list 'display-buffer-alist
       '(("\\*inferior.*\\*"
          (display-buffer-in-atom-window)
          (side . right)
@@ -71,7 +71,11 @@
             (side . right)
             (slot . 2)
             (window-width . 80))
-        ))
+        ("\\*Ilist\\*"
+            (display-buffer-reuse-window)
+            (side . left)
+            (slot . 0)
+            (window-width . 40))))
 
-
+(reapply-csharp-ts-mode-font-lock-settings)
 (provide 'config)

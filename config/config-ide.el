@@ -1,40 +1,87 @@
 ;;; config-ide.el -*- lexical-binding: t; -*-
-(defun delete-carrage-returns ()
-  "Remove ^M in buffer"
-  (interactive)
-  (save-excursion
-    (goto-char 0)
-    (while (search-forward "\r" nil :noerror)
-      (replace-match ""))))
 
-
-(defun +eglot-code-actions ()
-    (interactive)
-    (call-interactively 'eglot-code-actions)
-    (delete-carrage-returns))
-
-(defun +eglot-format-buffer ()
-    (interactive)
-    (call-interactively 'eglot-format-buffer)
-    (delete-carrage-returns))
-
-
-(use-package eglot
-  :config
-  (custom-set-faces '(eglot-type-hint-face
-                      ((t (:box (:line-width 2 :color "#323232")
-                                :height 0.8)))))
+(use-package lsp-mode
+  :hook (lsp-mode . sideline-mode)
+  :init
+  (setq lsp-headerline-breadcrumb-enable nil
+        lsp-auto-guess-root t
+        lsp-use-plists t
+        lsp-signature-auto-activate t
+        lsp-signature-doc-lines 5
+        lsp-completion-show-detail t
+        lsp-completion-show-kind t
+        lsp-signature-render-documentation t
+        lsp-inlay-hint-enable t
+        lsp-tcp-connection-timeout 0.01)
   :bind
   (:map evil-normal-state-map
-        ("<SPC>f" . +eglot-format-buffer)
-        ("C-." . +eglot-code-actions)
-        ("<SPC>lr" . eglot-rename)))
-  
+        ("C-." . lsp-execute-code-action)
+        ("<SPC>f" . lsp-format-buffer)
+        ("gD" . lsp-find-decleration)
+        ("gd" . lsp-find-definition)))
+
+
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+(advice-add (if (progn (require 'json)
+                       (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+              'json-read)
+            :around
+            #'lsp-booster--advice-json-parse)
+
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+
+(use-package lsp-ui
+  :init
+  (setq lsp-ui-sideline-enable nil)
+  :bind
+  (:map evil-normal-state-map
+        ("K" . lsp-ui-doc-toggle)))
+
+
+(use-package flycheck
+  :config
+  (custom-set-faces
+   '(flycheck-error ((t (:underline (:color "red" :style line))))))
+  (custom-set-faces
+   '(flycheck-warning ((t (:underline (:color "yellow" :style line))))))
+  (custom-set-faces
+   '(flycheck-info ((t (:underline (:color "green" :style line))))))
+
+  :hook (lsp-mode . flycheck-mode)
+  :bind
+  (:map evil-normal-state-map
+        ( "[d" . flycheck-next-error )
+        ( "]d" . flycheck-prev-error)))
+
+(use-package consult-flycheck)
+
+(use-package company
+  :hook
+  (prog-mode . company-mode))
 
 
 (use-package sideline
-  :hook
-  (flymake-mode . sideline-mode)
   :init
   (setq sideline-backends-left-skip-current-line t   ; don't display on current line (left)
         sideline-backends-right-skip-current-line t  ; don't display on current line (right)
@@ -45,21 +92,13 @@
         sideline-priority 100                        ; overlays' priority
         sideline-display-backend-name t))
 
-(use-package sideline-flymake
-  :after sideline
-  :config
-  (add-to-list 'sideline-backends-right 'sideline-flymake))
+(use-package sideline-lsp
+  :init
+  (add-to-list 'sideline-backends-right '(sideline-lsp)))
 
-(use-package sideline-eglot
-  :after sideline
-  :ensure (sideline-eglot :host github :repo "emacs-sideline/sideline-eglot")
-  :config
-  (setq sideline-eglot-code-actions-prefix "󰌵 ")
-  (add-to-list 'sideline-backends-right 'sideline-eglot))
-
-(use-package sideline-eldoc
-  :after sideline
-  :ensure (sideline-eldoc :host github :repo "ginqi7/sideline-eldoc"))
+(use-package sideline-flycheck
+  :init
+  (add-to-list 'sideline-backends-right '(sideline-flycheck)))
 
 (use-package breadcrumb
   :init
@@ -110,8 +149,8 @@
                           (t string))))))
   :custom
   (breadcrumb-project-crumb-separator " > ")
-  :config
-  (breadcrumb-mode))
+  :hook
+  (prog-mode . breadcrumb-mode))
 
 
 
@@ -125,7 +164,7 @@
   (prog-mode . yas-minor-mode))
 
 (use-package yasnippet-capf
-  :after cape
+  :after (yasnippet cape)
   :init (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 
@@ -137,15 +176,20 @@
 (use-package yasnippet-snippets
   :defer t)
 
-(use-package format-all)
+(use-package format-all
+  :defer t)
 
 (use-package eldoc-box)
 
-(use-package ts-fold
-  :ensure (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold"))
-(use-package ts-docstr 
-  :ensure (ts-docstr :type git :host github :repo "emacs-vs/ts-docstr"
-                       :files (:defaults "langs/*.el")))
+(defun treesit-enabled-p ()
+  "Checks if the current buffer has a treesit parser."
+  (interactive)
+  (and (fboundp 'treesit-available-p)
+       (treesit-available-p)
+       (treesit-language-at (point))))
+
+(use-package treesit-fold
+  :defer t)
 
 (provide 'config-ide)
 ;;; config-ide.el ends here

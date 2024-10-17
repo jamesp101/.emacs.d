@@ -27,7 +27,6 @@
   :bind (:map evil-normal-state-map
               ("<SPC>oi" . indent-bars-mode)))
 
-(use-package transient)
 
 (use-package dashboard
   :config

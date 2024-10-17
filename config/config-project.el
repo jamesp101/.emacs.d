@@ -1,11 +1,7 @@
 ;;; config-project -*- lexical-binding: t; -*-
 
 (use-package project
-  :ensure nil
-  :bind
-  (:map evil-normal-state-map
-        ("<SPC>pr" . project-remember-projects-under))
-        ("<SPC>pd" . project-forget-project))
+  :ensure nil)
 
 (use-package compile
   :ensure nil
@@ -43,9 +39,6 @@
   :config
   (project-treemacs-mode)
   (treemacs-project-follow-mode))
-
-(use-package consult-eglot
-  :defer t)
 
 (use-package treemacs-magit
   :after (treemacs magit))
@@ -113,5 +106,11 @@
   (vc-git-diff-switches '("--histogram"))
   (diff-hl-side 'right)
   (diff-hl-draw-borders nil))
+
+
+(use-package imenu-list
+  :bind
+  (:map evil-normal-state-map
+        ("<SPC>m" . imenu-list-smart-toggle)))
 
 (provide 'config-project)
